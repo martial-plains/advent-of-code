@@ -13,8 +13,8 @@ impl Day02 {
         input
             .lines()
             .map(|line| {
-                line.split_terminator('x')
-                    .flat_map(|s| s.chars().map(|c| c as isize).collect::<Vec<isize>>())
+                line.split('x')
+                    .map(|s: &str| s.parse::<isize>().unwrap())
                     .collect::<Vec<isize>>()
             })
             .map(mapping)
@@ -22,7 +22,19 @@ impl Day02 {
     }
 
     pub fn part2(input: &str) -> isize {
-        todo!()
+        let mapping = |v: Vec<isize>| {
+            2 * min(v[0] + v[1], min(v[0] + v[2], v[1] + v[2])) + v[0] * v[1] * v[2]
+        };
+
+        input
+            .lines()
+            .map(|line| {
+                line.split('x')
+                    .map(|s: &str| s.parse::<isize>().unwrap())
+                    .collect::<Vec<isize>>()
+            })
+            .map(mapping)
+            .sum()
     }
 }
 
