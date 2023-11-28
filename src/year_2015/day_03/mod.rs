@@ -10,22 +10,22 @@ struct Day03;
 impl Day03 {
     const TITLE: &'static str = "Perfectly Spherical Houses in a Vacuum";
 
-    pub fn part1(input: &str) -> isize {
+    pub fn part1(input: &str) -> usize {
         let input = input
             .chars()
             .map(Direction::from)
             .map(Point::from)
             .collect::<Vec<Point>>();
-        Self::deliver(&input, |_| true) as isize
+        Self::deliver(&input, |_| true)
     }
 
-    pub fn part2(input: &str) -> isize {
+    pub fn part2(input: &str) -> usize {
         let input = input
             .chars()
             .map(Direction::from)
             .map(Point::from)
             .collect::<Vec<Point>>();
-        Self::deliver(&input, |i| i % 2 == 0) as isize
+        Self::deliver(&input, |i| i % 2 == 0)
     }
 
     fn deliver(input: &[Point], predicate: fn(usize) -> bool) -> usize {
@@ -106,25 +106,25 @@ mod tests {
     #[test]
     fn test_part1_puzzle() {
         let result = Day03::part1(INPUT);
-        assert_eq!(result, 2565)
+        assert_eq!(result, 2565);
     }
 
     #[test]
     fn test_part2_example1() {
         let result = Day03::part2("^v");
-        assert_eq!(result, 3)
+        assert_eq!(result, 3);
     }
 
     #[test]
     fn test_part2_example2() {
         let result = Day03::part2("^>v<");
-        assert_eq!(result, 3)
+        assert_eq!(result, 3);
     }
 
     #[test]
     fn test_part2_example3() {
         let result = Day03::part2("^v^v^v^v^v");
-        assert_eq!(result, 11)
+        assert_eq!(result, 11);
     }
 
     #[test]

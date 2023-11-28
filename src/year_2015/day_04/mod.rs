@@ -1,4 +1,4 @@
-use crate::shared::md5::*;
+use crate::shared::md5::hash;
 
 use std::{
     sync::atomic::{AtomicBool, AtomicU32, Ordering},
@@ -67,10 +67,10 @@ fn format_string(prefix: &str, n: u32) -> ([u8; 64], usize) {
 fn check_hash(buffer: &mut [u8], size: usize, n: u32, shared: &Day04) {
     let (result, ..) = hash(buffer, size);
 
-    if result & 0xffffff00 == 0 {
+    if result & 0xffff_ff00 == 0 {
         shared.second.fetch_min(n, Ordering::Relaxed);
         shared.done.store(true, Ordering::Relaxed);
-    } else if result & 0xfffff000 == 0 {
+    } else if result & 0xffff_f000 == 0 {
         shared.first.fetch_min(n, Ordering::Relaxed);
     }
 }
@@ -82,7 +82,7 @@ fn worker(shared: &Day04) {
 
         for n in 0..1000 {
             // Format macro is very slow, so update digits directly
-            buffer[size - 3] = b'0' + (n / 100) as u8;
+            buffer[size - 3] = b'0' + u8::try_from(n / 100).unwrap();
             buffer[size - 2] = b'0' + ((n / 10) % 10) as u8;
             buffer[size - 1] = b'0' + (n % 10) as u8;
 
@@ -95,21 +95,21 @@ fn worker(shared: &Day04) {
 mod tests {
     use super::Day04;
 
-    const INPUT: &'static str = include_str!("input.txt");
+    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {
-        assert_eq!(Day04::part1("abcdef"), 609043);
-        assert_eq!(Day04::part1("pqrstuv"), 1048970);
+        assert_eq!(Day04::part1("abcdef"), 609_043);
+        assert_eq!(Day04::part1("pqrstuv"), 1_048_970);
     }
 
     #[test]
     fn test_part1_puzzle() {
-        assert_eq!(Day04::part1(INPUT), 254575);
+        assert_eq!(Day04::part1(INPUT), 254_575);
     }
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(Day04::part2(INPUT), 1038736);
+        assert_eq!(Day04::part2(INPUT), 1_038_736);
     }
 }
