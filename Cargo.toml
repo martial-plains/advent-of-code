@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 algorithms = { git = "https://github.com/a-isaiahharvey/algorithms-rs", branch = "main" }
+itertools = "0.12.0"
 rayon = "1.8"
