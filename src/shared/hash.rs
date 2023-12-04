@@ -1,4 +1,8 @@
-use std::{collections::{HashSet, HashMap}, hash::{Hash, Hasher, BuildHasher}, ops::BitXor};
+use std::{
+    collections::{HashMap, HashSet},
+    hash::{BuildHasher, Hash, Hasher},
+    ops::BitXor,
+};
 
 /// Type alias for [`HashSet`] using [`FxHasher`].
 pub type FastSet<T> = HashSet<T, BuildFxHasher>;
@@ -69,7 +73,7 @@ impl BuildHasher for BuildFxHasher {
 ///
 /// Checkout the [Firefox code](https://searchfox.org/mozilla-central/rev/633345116df55e2d37be9be6555aa739656c5a7d/mfbt/HashFunctions.h#109-153)
 /// for a full description.
-const K: u64 = 0x517cc1b727220a95;
+const K: u64 = 0x517c_c1b7_2722_0a95;
 
 pub struct FxHasher {
     hash: u64,
@@ -90,31 +94,35 @@ impl Hasher for FxHasher {
             bytes = &bytes[8..];
         }
         if bytes.len() >= 4 {
-            self.add(u32::from_ne_bytes(bytes[..4].try_into().unwrap()) as u64);
+            self.add(u64::from(u32::from_ne_bytes(
+                bytes[..4].try_into().unwrap(),
+            )));
             bytes = &bytes[4..];
         }
         if bytes.len() >= 2 {
-            self.add(u16::from_ne_bytes(bytes[..2].try_into().unwrap()) as u64);
+            self.add(u64::from(u16::from_ne_bytes(
+                bytes[..2].try_into().unwrap(),
+            )));
             bytes = &bytes[2..];
         }
         if !bytes.is_empty() {
-            self.add(bytes[0] as u64);
+            self.add(u64::from(bytes[0]));
         }
     }
 
     #[inline]
     fn write_u8(&mut self, i: u8) {
-        self.add(i as u64);
+        self.add(u64::from(i));
     }
 
     #[inline]
     fn write_u16(&mut self, i: u16) {
-        self.add(i as u64);
+        self.add(u64::from(i));
     }
 
     #[inline]
     fn write_u32(&mut self, i: u32) {
-        self.add(i as u64);
+        self.add(u64::from(i));
     }
 
     #[inline]
@@ -132,4 +140,3 @@ impl Hasher for FxHasher {
         self.hash
     }
 }
-
