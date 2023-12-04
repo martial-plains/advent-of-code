@@ -5,47 +5,43 @@ use crate::shared::{
     point::Point,
 };
 
-struct Day03;
+pub const TITLE: &str = "Perfectly Spherical Houses in a Vacuum";
 
-impl Day03 {
-    const TITLE: &'static str = "Perfectly Spherical Houses in a Vacuum";
+pub fn part1(input: &str) -> usize {
+    let input = input
+        .chars()
+        .map(Direction::from)
+        .map(Point::from)
+        .collect::<Vec<Point>>();
+    deliver(&input, |_| true)
+}
 
-    pub fn part1(input: &str) -> usize {
-        let input = input
-            .chars()
-            .map(Direction::from)
-            .map(Point::from)
-            .collect::<Vec<Point>>();
-        Self::deliver(&input, |_| true)
-    }
+pub fn part2(input: &str) -> usize {
+    let input = input
+        .chars()
+        .map(Direction::from)
+        .map(Point::from)
+        .collect::<Vec<Point>>();
+    deliver(&input, |i| i % 2 == 0)
+}
 
-    pub fn part2(input: &str) -> usize {
-        let input = input
-            .chars()
-            .map(Direction::from)
-            .map(Point::from)
-            .collect::<Vec<Point>>();
-        Self::deliver(&input, |i| i % 2 == 0)
-    }
+fn deliver(input: &[Point], predicate: fn(usize) -> bool) -> usize {
+    let mut santa = Point::ORIGIN;
+    let mut robot = Point::ORIGIN;
+    let mut set = FastSet::with_capacity(10_000);
+    set.insert(Point::ORIGIN);
 
-    fn deliver(input: &[Point], predicate: fn(usize) -> bool) -> usize {
-        let mut santa = Point::ORIGIN;
-        let mut robot = Point::ORIGIN;
-        let mut set = FastSet::with_capacity(10_000);
-        set.insert(Point::ORIGIN);
-
-        for (index, point) in input.iter().enumerate() {
-            if predicate(index) {
-                santa += *point;
-                set.insert(santa);
-            } else {
-                robot += *point;
-                set.insert(robot);
-            }
+    for (index, point) in input.iter().enumerate() {
+        if predicate(index) {
+            santa += *point;
+            set.insert(santa);
+        } else {
+            robot += *point;
+            set.insert(robot);
         }
-
-        set.len()
     }
+
+    set.len()
 }
 
 #[derive(Debug)]
@@ -81,55 +77,55 @@ impl From<Direction> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Day03;
+    use super::*;
 
     const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_exmpale1() {
-        let result = Day03::part1(">");
+        let result = part1(">");
         assert_eq!(result, 2);
     }
 
     #[test]
     fn test_part1_example2() {
-        let result = Day03::part1("^>v<");
+        let result = part1("^>v<");
         assert_eq!(result, 4);
     }
 
     #[test]
     fn test_part1_example3() {
-        let result = Day03::part1("^v^v^v^v^v");
+        let result = part1("^v^v^v^v^v");
         assert_eq!(result, 2);
     }
 
     #[test]
     fn test_part1_puzzle() {
-        let result = Day03::part1(INPUT);
+        let result = part1(INPUT);
         assert_eq!(result, 2565);
     }
 
     #[test]
     fn test_part2_example1() {
-        let result = Day03::part2("^v");
+        let result = part2("^v");
         assert_eq!(result, 3);
     }
 
     #[test]
     fn test_part2_example2() {
-        let result = Day03::part2("^>v<");
+        let result = part2("^>v<");
         assert_eq!(result, 3);
     }
 
     #[test]
     fn test_part2_example3() {
-        let result = Day03::part2("^v^v^v^v^v");
+        let result = part2("^v^v^v^v^v");
         assert_eq!(result, 11);
     }
 
     #[test]
     fn test_part2_puzzle() {
-        let result = Day03::part2(INPUT);
+        let result = part2(INPUT);
         assert_eq!(result, 2639);
     }
 }

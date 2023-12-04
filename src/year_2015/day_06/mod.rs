@@ -5,52 +5,50 @@ use std::{
 
 use regex::{Matches, Regex};
 
-struct Day06;
+pub const TITLE: &str = "Probably a Fire Hazard";
 
-impl Day06 {
-    fn part1(input: &str) -> usize {
-        let mut lights = vec![[false; 1000]; 1000].into_boxed_slice();
-        let points_regex = Regex::new(r"\d+").unwrap();
-        for light_switch in parse_switches(input, &points_regex) {
-            match light_switch {
-                LightSwitch::TurnOn(p1, p2) => {
-                    update_bools(&p1, &p2, &mut lights, |_| true);
-                }
-                LightSwitch::TurnOff(p1, p2) => {
-                    update_bools(&p1, &p2, &mut lights, |_| false);
-                }
-                LightSwitch::Toggle(p1, p2) => {
-                    update_bools(&p1, &p2, &mut lights, |l| !l);
-                }
+pub fn part1(input: &str) -> usize {
+    let mut lights = vec![[false; 1000]; 1000].into_boxed_slice();
+    let points_regex = Regex::new(r"\d+").unwrap();
+    for light_switch in parse_switches(input, &points_regex) {
+        match light_switch {
+            LightSwitch::TurnOn(p1, p2) => {
+                update_bools(&p1, &p2, &mut lights, |_| true);
+            }
+            LightSwitch::TurnOff(p1, p2) => {
+                update_bools(&p1, &p2, &mut lights, |_| false);
+            }
+            LightSwitch::Toggle(p1, p2) => {
+                update_bools(&p1, &p2, &mut lights, |l| !l);
             }
         }
-        lights.iter().flatten().filter(|&x| *x).count()
     }
+    lights.iter().flatten().filter(|&x| *x).count()
+}
 
-    fn part2(input: &str) -> u32 {
-        let mut lights = vec![[Light(0); 1000]; 1000].into_boxed_slice();
-        let points_regex = Regex::new(r"\d+").unwrap();
-        for light_switch in parse_switches(input, &points_regex) {
-            match light_switch {
-                LightSwitch::TurnOn(p1, p2) => {
-                    update_lights(&p1, &p2, &mut lights, |l| l + 1);
-                }
-                LightSwitch::TurnOff(p1, p2) => {
-                    update_lights(&p1, &p2, &mut lights, |l| {
-                        if l > 0 {
-                            return l - 1;
-                        }
+pub fn part2(input: &str) -> u32 {
+    let mut lights = vec![[Light(0); 1000]; 1000].into_boxed_slice();
+    let points_regex = Regex::new(r"\d+").unwrap();
+    for light_switch in parse_switches(input, &points_regex) {
+        match light_switch {
+            LightSwitch::TurnOn(p1, p2) => {
+                update_lights(&p1, &p2, &mut lights, |l| l + 1);
+            }
+            LightSwitch::TurnOff(p1, p2) => {
+                update_lights(&p1, &p2, &mut lights, |l| {
+                    if l > 0 {
+                        return l - 1;
+                    }
 
-                        l
-                    });
-                }
-                LightSwitch::Toggle(p1, p2) => {
-                    update_lights(&p1, &p2, &mut lights, |l| l + 2);
-                }
+                    l
+                });
+            }
+            LightSwitch::Toggle(p1, p2) => {
+                update_lights(&p1, &p2, &mut lights, |l| l + 2);
             }
         }
-        lights.iter().flatten().map(|l| u32::from(l.0)).sum()
     }
+    lights.iter().flatten().map(|l| u32::from(l.0)).sum()
 }
 
 struct Point {
@@ -89,7 +87,6 @@ fn parse_switches(input: &str, regex: &Regex) -> Vec<LightSwitch> {
             let points = parse_points(regex, line);
             result.push(LightSwitch::Toggle(points.0, points.1));
         } else {
-            dbg!(line);
             unreachable!()
         }
     }
@@ -121,14 +118,14 @@ fn update_lights(p1: &Point, p2: &Point, lights: &mut Box<[[Light; 1000]]>, f: f
 
 #[cfg(test)]
 mod test {
-    use crate::year_2015::day_06::Day06;
+    use super::*;
 
     const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {
         assert_eq!(
-            Day06::part1(
+            part1(
                 &[
                     "turn on 0,0 through 999,999",
                     "toggle 0,0 through 999,0",
@@ -142,19 +139,19 @@ mod test {
 
     #[test]
     fn test_part1_puzzle() {
-        assert_eq!(Day06::part1(INPUT), 400_410);
+        assert_eq!(part1(INPUT), 400_410);
     }
 
     #[test]
     fn test_part2_examples() {
         assert_eq!(
-            Day06::part2(&["turn on 0,0 through 0,0", "toggle 0,0 through 999,999",].join("\n")),
+            part2(&["turn on 0,0 through 0,0", "toggle 0,0 through 999,999",].join("\n")),
             2_000_001
         );
     }
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(Day06::part2(INPUT), 15_343_601);
+        assert_eq!(part2(INPUT), 15_343_601);
     }
 }

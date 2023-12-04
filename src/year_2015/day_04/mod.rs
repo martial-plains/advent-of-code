@@ -7,7 +7,7 @@ use std::{
 
 use rayon::prelude::*;
 
-pub struct Day04 {
+pub struct Solution {
     prefix: String,
     done: AtomicBool,
     counter: AtomicU32,
@@ -15,22 +15,20 @@ pub struct Day04 {
     second: AtomicU32,
 }
 
-impl Day04 {
-    const TITLE: &'static str = "The Ideal Stocking Stuffer";
+pub const TITLE: &str = "The Ideal Stocking Stuffer";
 
-    pub fn part1(input: &str) -> u32 {
-        let shared = parse(input);
-        shared.first.load(Ordering::Relaxed)
-    }
-
-    pub fn part2(input: &str) -> u32 {
-        let shared = parse(input);
-        shared.second.load(Ordering::Relaxed)
-    }
+pub fn part1(input: &str) -> u32 {
+    let shared = parse(input);
+    shared.first.load(Ordering::Relaxed)
 }
 
-fn parse(input: &str) -> Day04 {
-    let shared = Day04 {
+pub fn part2(input: &str) -> u32 {
+    let shared = parse(input);
+    shared.second.load(Ordering::Relaxed)
+}
+
+fn parse(input: &str) -> Solution {
+    let shared = Solution {
         prefix: input.trim().to_string(),
         done: AtomicBool::new(false),
         counter: AtomicU32::new(1000),
@@ -64,7 +62,7 @@ fn format_string(prefix: &str, n: u32) -> ([u8; 64], usize) {
     (buffer, size)
 }
 
-fn check_hash(buffer: &mut [u8], size: usize, n: u32, shared: &Day04) {
+fn check_hash(buffer: &mut [u8], size: usize, n: u32, shared: &Solution) {
     let (result, ..) = hash(buffer, size);
 
     if result & 0xffff_ff00 == 0 {
@@ -75,7 +73,7 @@ fn check_hash(buffer: &mut [u8], size: usize, n: u32, shared: &Day04) {
     }
 }
 
-fn worker(shared: &Day04) {
+fn worker(shared: &Solution) {
     while !shared.done.load(Ordering::Relaxed) {
         let offset = shared.counter.fetch_add(1000, Ordering::Relaxed);
         let (mut buffer, size) = format_string(&shared.prefix, offset);
@@ -93,23 +91,23 @@ fn worker(shared: &Day04) {
 
 #[cfg(test)]
 mod tests {
-    use super::Day04;
+    use super::*;
 
     const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {
-        assert_eq!(Day04::part1("abcdef"), 609_043);
-        assert_eq!(Day04::part1("pqrstuv"), 1_048_970);
+        assert_eq!(part1("abcdef"), 609_043);
+        assert_eq!(part1("pqrstuv"), 1_048_970);
     }
 
     #[test]
     fn test_part1_puzzle() {
-        assert_eq!(Day04::part1(INPUT), 254_575);
+        assert_eq!(part1(INPUT), 254_575);
     }
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(Day04::part2(INPUT), 1_038_736);
+        assert_eq!(part2(INPUT), 1_038_736);
     }
 }
