@@ -4,17 +4,18 @@ pub const TITLE: &str = "It Hangs in the Balance";
 
 pub const INPUT: &str = include_str!("input.txt");
 
-#[must_use]
 /// # Panics
 ///
 /// Panics if unable to parse input
+#[must_use]
 pub fn part1(input: &str) -> u64 {
     solve(input, 3).unwrap()
 }
-#[must_use]
+
 /// # Panics
 ///
 /// Panics if unable to parse input
+#[must_use]
 pub fn part2(input: &str) -> u64 {
     solve(input, 4).unwrap()
 }

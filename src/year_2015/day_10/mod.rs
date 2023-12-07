@@ -4,18 +4,18 @@ pub const TITLE: &str = "Elves Look, Elves Say";
 
 pub const INPUT: &str = "3113322113";
 
-#[must_use]
 /// # Panics
 ///
 /// Panics if `input` is empty.
+#[must_use]
 pub fn part1(input: &str) -> usize {
     apply_n(input, 40).unwrap()
 }
 
-#[must_use]
 /// # Panics
 ///
 /// Panics if `input` is empty.
+#[must_use]
 pub fn part2(input: &str) -> usize {
     apply_n(input, 50).unwrap()
 }
