@@ -4,6 +4,8 @@ use permutohedron::Heap;
 
 pub const TITLE: &str = "All in a Single Night";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 /// # Panics
 /// Panics if `input` is empty
 #[must_use]
@@ -86,8 +88,6 @@ fn route_lengths((place_count, routes): (Place, Routes)) -> Vec<usize> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_puzzle() {

@@ -2,6 +2,8 @@ use algorithms::higher_order_functions::Reductions;
 
 pub const TITLE: &str = "Not Quite Lisp";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 /// # Panics
 /// Panics if input is empty
 #[must_use]
@@ -42,8 +44,6 @@ fn convert(character: char) -> isize {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_example1() {

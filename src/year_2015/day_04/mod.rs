@@ -7,15 +7,9 @@ use std::{
 
 use rayon::prelude::*;
 
-struct Solution {
-    prefix: String,
-    done: AtomicBool,
-    counter: AtomicU32,
-    first: AtomicU32,
-    second: AtomicU32,
-}
-
 pub const TITLE: &str = "The Ideal Stocking Stuffer";
+
+pub const INPUT: &str = include_str!("input.txt");
 
 #[must_use]
 pub fn part1(input: &str) -> u32 {
@@ -27,6 +21,14 @@ pub fn part1(input: &str) -> u32 {
 pub fn part2(input: &str) -> u32 {
     let shared = parse(input);
     shared.second.load(Ordering::Relaxed)
+}
+
+struct Solution {
+    prefix: String,
+    done: AtomicBool,
+    counter: AtomicU32,
+    first: AtomicU32,
+    second: AtomicU32,
 }
 
 fn parse(input: &str) -> Solution {
@@ -94,8 +96,6 @@ fn worker(shared: &Solution) {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {

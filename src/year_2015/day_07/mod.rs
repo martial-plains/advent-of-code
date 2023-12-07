@@ -2,6 +2,8 @@ use std::collections::HashMap;
 
 pub const TITLE: &str = "Some Assembly Required";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 #[must_use]
 pub fn part1(input: &str) -> u16 {
     parse(input).0
@@ -50,7 +52,7 @@ fn signal<'a>(
 /// # Panics
 /// * Panics if `input` is empty
 #[must_use]
-pub fn parse(input: &str) -> (u16, u16) {
+fn parse(input: &str) -> (u16, u16) {
     let mut tokens = input.split_ascii_whitespace();
     let mut circuit = HashMap::new();
 
@@ -92,8 +94,6 @@ mod tests {
     use std::collections::HashMap;
 
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_puzzle() {

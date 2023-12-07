@@ -2,6 +2,8 @@ use std::cmp::min;
 
 pub const TITLE: &str = "I Was Told There Would Be No Math";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 /// # Panics
 /// * Panics if input is empty
 /// * Panics if string isn't ascii safe
@@ -44,8 +46,6 @@ pub fn part2(input: &str) -> isize {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_example1() {

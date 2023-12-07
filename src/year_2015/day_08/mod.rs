@@ -1,11 +1,6 @@
 pub const TITLE: &str = "Matchsticks";
 
-enum State {
-    Regular,
-    EscapeDetected,
-    Hex01,
-    Hex02(u8),
-}
+pub const INPUT: &str = include_str!("input.txt");
 
 /// # Panics
 /// * Panics if an invalid pattern is given.
@@ -81,6 +76,13 @@ pub fn part2(input: &str) -> usize {
         .sum()
 }
 
+enum State {
+    Regular,
+    EscapeDetected,
+    Hex01,
+    Hex02(u8),
+}
+
 const DOUBLE_QUOTE: u8 = 0x22;
 const BACKSLASH: u8 = 0x5c;
 const X_LOWER: u8 = 0x78;
@@ -88,8 +90,6 @@ const X_LOWER: u8 = 0x78;
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_puzzle() {

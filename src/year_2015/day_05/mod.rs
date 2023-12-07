@@ -4,6 +4,8 @@ use itertools::Itertools;
 
 pub const TITLE: &str = "Doesn't He Have Intern-Elves For This?";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 pub fn part1(input: &str) -> usize {
     input
         .lines()
@@ -63,8 +65,6 @@ fn parse(input: &str) -> Vec<&[u8]> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {

@@ -7,6 +7,8 @@ use crate::shared::{
 
 pub const TITLE: &str = "Perfectly Spherical Houses in a Vacuum";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 pub fn part1(input: &str) -> usize {
     let input = input
         .chars()
@@ -78,8 +80,6 @@ impl From<Direction> for Point {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_exmpale1() {

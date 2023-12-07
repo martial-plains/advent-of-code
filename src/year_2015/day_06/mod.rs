@@ -7,6 +7,8 @@ use regex::{Matches, Regex};
 
 pub const TITLE: &str = "Probably a Fire Hazard";
 
+pub const INPUT: &str = include_str!("input.txt");
+
 /// # Panics
 /// * Panics if an invalid pattern is given.
 #[must_use]
@@ -125,8 +127,6 @@ fn update_lights(p1: &Point, p2: &Point, lights: &mut Box<[[Light; 1000]]>, f: f
 #[cfg(test)]
 mod test {
     use super::*;
-
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn test_part1_examples() {
