@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub const TITLE: &str = "";
+pub const TITLE: &str = "Some Assembly Required";
 
 pub fn part1(input: &str) -> u16 {
     parse(input).0
