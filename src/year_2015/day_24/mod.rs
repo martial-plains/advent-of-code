@@ -176,6 +176,6 @@ mod tests {
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(part1(INPUT), 80_393_059);
+        assert_eq!(part2(INPUT), 80_393_059);
     }
 }
