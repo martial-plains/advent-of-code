@@ -7,6 +7,8 @@ enum State {
     Hex02(u8),
 }
 
+/// # Panics
+/// * Panics if an invalid pattern is given.
 #[must_use]
 pub fn part1(input: &str) -> usize {
     input
@@ -38,18 +40,18 @@ pub fn part1(input: &str) -> usize {
                         }
                     }
                     State::Hex01 => {
-                        if byte >= b'0' && byte <= b'9' {
+                        if byte.is_ascii_digit() {
                             State::Hex02(byte - b'0')
-                        } else if byte >= b'a' && byte <= b'z' {
+                        } else if byte.is_ascii_lowercase() {
                             State::Hex02(byte - (b'a' - 10))
                         } else {
                             panic!("expected hex escape sequence");
                         }
                     }
                     State::Hex02(first) => {
-                        let second = if byte >= b'0' && byte <= b'9' {
+                        let second = if byte.is_ascii_digit() {
                             byte - b'0'
-                        } else if byte >= b'a' && byte <= b'z' {
+                        } else if byte.is_ascii_lowercase() {
                             byte - (b'a' - 10)
                         } else {
                             panic!("expected hex escape sequence");
@@ -67,6 +69,7 @@ pub fn part1(input: &str) -> usize {
         .sum()
 }
 
+#[must_use]
 pub fn part2(input: &str) -> usize {
     input
         .split('\n')

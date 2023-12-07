@@ -2,6 +2,9 @@ use algorithms::higher_order_functions::Reductions;
 
 pub const TITLE: &str = "Not Quite Lisp";
 
+/// # Panics
+/// Panics if input is empty
+#[must_use]
 pub fn part1(input: &str) -> isize {
     input
         .lines()
@@ -11,6 +14,8 @@ pub fn part1(input: &str) -> isize {
         .sum()
 }
 
+/// # Panics
+/// Panics if input is empty
 pub fn part2(input: &str) -> isize {
     (input
         .lines()

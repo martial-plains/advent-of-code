@@ -2,6 +2,10 @@ use std::cmp::min;
 
 pub const TITLE: &str = "I Was Told There Would Be No Math";
 
+/// # Panics
+/// * Panics if input is empty
+/// * Panics if string isn't ascii safe
+#[must_use]
 pub fn part1(input: &str) -> isize {
     let mapping = |v: Vec<isize>| {
         2 * (v[0] * v[1] + v[0] * v[2] + v[1] * v[2])
@@ -18,6 +22,10 @@ pub fn part1(input: &str) -> isize {
         .sum()
 }
 
+/// # Panics
+/// * Panics if input is empty
+/// * Panics if string isn't ascii safe
+#[must_use]
 pub fn part2(input: &str) -> isize {
     let mapping =
         |v: Vec<isize>| 2 * min(v[0] + v[1], min(v[0] + v[2], v[1] + v[2])) + v[0] * v[1] * v[2];

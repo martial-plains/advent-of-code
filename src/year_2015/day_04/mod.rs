@@ -7,7 +7,7 @@ use std::{
 
 use rayon::prelude::*;
 
-pub struct Solution {
+struct Solution {
     prefix: String,
     done: AtomicBool,
     counter: AtomicU32,
@@ -17,11 +17,13 @@ pub struct Solution {
 
 pub const TITLE: &str = "The Ideal Stocking Stuffer";
 
+#[must_use]
 pub fn part1(input: &str) -> u32 {
     let shared = parse(input);
     shared.first.load(Ordering::Relaxed)
 }
 
+#[must_use]
 pub fn part2(input: &str) -> u32 {
     let shared = parse(input);
     shared.second.load(Ordering::Relaxed)

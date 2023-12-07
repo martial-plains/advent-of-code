@@ -2,10 +2,12 @@ use std::collections::HashMap;
 
 pub const TITLE: &str = "Some Assembly Required";
 
+#[must_use]
 pub fn part1(input: &str) -> u16 {
     parse(input).0
 }
 
+#[must_use]
 pub fn part2(input: &str) -> u16 {
     parse(input).1
 }
@@ -45,6 +47,9 @@ fn signal<'a>(
     result
 }
 
+/// # Panics
+/// * Panics if `input` is empty
+#[must_use]
 pub fn parse(input: &str) -> (u16, u16) {
     let mut tokens = input.split_ascii_whitespace();
     let mut circuit = HashMap::new();

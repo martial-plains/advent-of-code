@@ -7,6 +7,9 @@ use regex::{Matches, Regex};
 
 pub const TITLE: &str = "Probably a Fire Hazard";
 
+/// # Panics
+/// * Panics if an invalid pattern is given.
+#[must_use]
 pub fn part1(input: &str) -> usize {
     let mut lights = vec![[false; 1000]; 1000].into_boxed_slice();
     let points_regex = Regex::new(r"\d+").unwrap();
@@ -26,6 +29,9 @@ pub fn part1(input: &str) -> usize {
     lights.iter().flatten().filter(|&x| *x).count()
 }
 
+/// # Panics
+/// * Panics if an invalid pattern is given.
+#[must_use]
 pub fn part2(input: &str) -> u32 {
     let mut lights = vec![[Light(0); 1000]; 1000].into_boxed_slice();
     let points_regex = Regex::new(r"\d+").unwrap();
