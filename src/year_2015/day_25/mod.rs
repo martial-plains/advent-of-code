@@ -57,5 +57,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part1_puzzle() {}
+    fn test_part1_puzzle() {
+        assert_eq!(part1(INPUT), 19_980_801);
+    }
 }
