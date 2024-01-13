@@ -79,7 +79,7 @@ pub fn part2(input: &str) -> usize {
             |molecule| molecule.len() == 1 && molecule[0] == 0,
         )
         .map(|path| path.last().unwrap().1)
-        .ok_or(anyhow!("no solution found for input"))
+        .ok_or_else(|| anyhow!("no solution found for input"))
         .unwrap()
 }
 
@@ -87,19 +87,25 @@ fn parse_input(input: &str) -> anyhow::Result<(Vec<(&str, &str)>, &str)> {
     let mut iter = input.lines();
     let mut rules = Vec::new();
     loop {
-        let line = iter.next().ok_or(anyhow!("unexpected end of input"))?;
+        let line = iter
+            .next()
+            .ok_or_else(|| anyhow!("unexpected end of input"))?;
         if line.is_empty() {
             break;
         }
         let mut parts = line.split(" => ");
-        let from = parts.next().ok_or(anyhow!("expected input atom"))?;
-        let into = parts.next().ok_or(anyhow!("expected output atom"))?;
+        let from = parts.next().ok_or_else(|| anyhow!("expected input atom"))?;
+        let into = parts
+            .next()
+            .ok_or_else(|| anyhow!("expected output atom"))?;
         if parts.next().is_some() {
             return Err(anyhow!("expected end of line"));
         }
         rules.push((from, into));
     }
-    let molecule = iter.next().ok_or(anyhow!("unexpected end of input"))?;
+    let molecule = iter
+        .next()
+        .ok_or_else(|| anyhow!("unexpected end of input"))?;
     if iter.next().is_some() {
         return Err(anyhow!("expected end of input"));
     }
@@ -152,7 +158,7 @@ fn string_to_molecule<'s>(
         }
         let atom = *atom_map
             .entry(slice)
-            .or_insert(Atom::try_from(atom_map_len).unwrap());
+            .or_insert_with(|| Atom::try_from(atom_map_len).unwrap());
         molecule.push(atom);
     }
     Ok(molecule)

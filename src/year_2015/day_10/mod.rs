@@ -34,7 +34,7 @@ fn look_and_say(input: &str) -> anyhow::Result<String> {
     let mut chars = input.chars();
     let mut curr = chars
         .next()
-        .ok_or(anyhow!("look_and_say requires at least 1 character"))?;
+        .ok_or_else(|| anyhow!("look_and_say requires at least 1 character"))?;
     let mut count = 1;
     for next in chars {
         if next == curr {

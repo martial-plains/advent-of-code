@@ -1,6 +1,6 @@
 #![allow(clippy::many_single_char_names)]
 
-pub fn buffer_size(n: usize) -> usize {
+pub const fn buffer_size(n: usize) -> usize {
     (n + 9).next_multiple_of(64)
 }
 
@@ -108,31 +108,31 @@ pub fn hash(mut buffer: &mut [u8], size: usize) -> (u32, u32, u32, u32) {
 }
 
 #[inline]
-fn round1(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
+const fn round1(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
     let f = (b & c) | (!b & d);
     common(f, a, b, m, s, k)
 }
 
 #[inline]
-fn round2(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
+const fn round2(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
     let f = (b & d) | (c & !d);
     common(f, a, b, m, s, k)
 }
 
 #[inline]
-fn round3(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
+const fn round3(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
     let f = b ^ c ^ d;
     common(f, a, b, m, s, k)
 }
 
 #[inline]
-fn round4(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
+const fn round4(a: u32, b: u32, c: u32, d: u32, m: u32, s: u32, k: u32) -> u32 {
     let f = c ^ (b | !d);
     common(f, a, b, m, s, k)
 }
 
 #[inline]
-fn common(f: u32, a: u32, b: u32, m: u32, s: u32, k: u32) -> u32 {
+const fn common(f: u32, a: u32, b: u32, m: u32, s: u32, k: u32) -> u32 {
     f.wrapping_add(a)
         .wrapping_add(k)
         .wrapping_add(m)

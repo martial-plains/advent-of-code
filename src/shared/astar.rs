@@ -54,7 +54,7 @@ impl<N: Node, C: Cost> Ord for Open<N, C> {
 
 impl<N: Node, C: Cost> AStar<N, C> {
     pub fn new() -> Self {
-        AStar {
+        Self {
             meta: HashMap::new(),
             open: BinaryHeap::new(),
             path: Vec::new(),

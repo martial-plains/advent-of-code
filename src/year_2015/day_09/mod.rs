@@ -34,11 +34,11 @@ struct Connection {
 }
 
 impl Connection {
-    fn new(a: Place, b: Place) -> Connection {
+    const fn new(a: Place, b: Place) -> Self {
         if a <= b {
-            Connection { a, b }
+            Self { a, b }
         } else {
-            Connection { a: b, b: a }
+            Self { a: b, b: a }
         }
     }
 }

@@ -112,7 +112,10 @@ fn parse_input(input: &str) -> anyhow::Result<Vec<Instruction>> {
             };
             let mut parts = line[4..].split(", ");
             let reg = parse_register(parts.next().unwrap())?;
-            let offset = parts.next().ok_or(anyhow!("expected offset"))?.parse()?;
+            let offset = parts
+                .next()
+                .ok_or_else(|| anyhow!("expected offset"))?
+                .parse()?;
             Ok(constructor(reg, offset))
         })
         .collect::<anyhow::Result<_>>()

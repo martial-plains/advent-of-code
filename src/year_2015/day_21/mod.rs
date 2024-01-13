@@ -33,7 +33,7 @@ pub fn part2(input: &str) -> anyhow::Result<usize> {
         .filter(|loadout| !does_player_win_fight(&boss, loadout))
         .map(|loadout| loadout.cost)
         .max()
-        .ok_or(anyhow!("no loadout exists where the boss wins"))
+        .ok_or_else(|| anyhow!("no loadout exists where the boss wins"))
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -123,7 +123,7 @@ fn loadouts() -> impl Iterator<Item = Loadout> + Clone {
     (0..660).map(loadout_from_index)
 }
 
-fn calculate_effective_damage(from: &Unit, to: &Unit) -> usize {
+const fn calculate_effective_damage(from: &Unit, to: &Unit) -> usize {
     if from.damage <= to.armor {
         1
     } else {
@@ -131,7 +131,7 @@ fn calculate_effective_damage(from: &Unit, to: &Unit) -> usize {
     }
 }
 
-fn does_player_win_fight(boss: &Unit, loadout: &Loadout) -> bool {
+const fn does_player_win_fight(boss: &Unit, loadout: &Loadout) -> bool {
     let player = Unit {
         hp: 100,
         damage: loadout.damage,
@@ -155,7 +155,7 @@ fn parse_input(input: &str) -> anyhow::Result<Unit> {
         )
         .unwrap();
     };
-    let captures = RE.captures(input).ok_or(anyhow!("invalid input"))?;
+    let captures = RE.captures(input).ok_or_else(|| anyhow!("invalid input"))?;
     let hp = captures["hp"].parse()?;
     let damage = captures["damage"].parse()?;
     let armor = captures["armor"].parse()?;

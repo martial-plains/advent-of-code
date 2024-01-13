@@ -25,7 +25,7 @@ pub fn part1(input: &str) -> usize {
     let mut astar = crate::shared::astar::AStar::new();
     let path = astar
         .solve(state, State::next_states, |_| 0, |state| state.boss.hp <= 0)
-        .ok_or(anyhow!("no solution found"))
+        .ok_or_else(|| anyhow!("no solution found"))
         .unwrap();
     path.last().unwrap().1
 }
@@ -63,7 +63,7 @@ pub fn part2(input: &str) -> usize {
             |_| 0,
             |state| state.boss.hp <= 0,
         )
-        .ok_or(anyhow!("no solution found"))
+        .ok_or_else(|| anyhow!("no solution found"))
         .unwrap();
     path.last().unwrap().1
 }
@@ -132,8 +132,8 @@ impl State {
         self.player.hp -= damage;
     }
 
-    fn next_states(&self) -> ArrayVec<(State, usize), 5> {
-        let mut new_states = ArrayVec::<(State, usize), 5>::new();
+    fn next_states(&self) -> ArrayVec<(Self, usize), 5> {
+        let mut new_states = ArrayVec::<(Self, usize), 5>::new();
         let mut state = *self;
 
         // Apply effects
@@ -215,7 +215,7 @@ fn parse_input(input: &str) -> anyhow::Result<Boss> {
         static ref RE: Regex =
             Regex::new(r"^Hit Points: (?P<hp>\d+)\nDamage: (?P<damage>\d+)$").unwrap();
     };
-    let captures = RE.captures(input).ok_or(anyhow!("invalid input"))?;
+    let captures = RE.captures(input).ok_or_else(|| anyhow!("invalid input"))?;
     let hp = captures["hp"].parse()?;
     let damage = captures["damage"].parse()?;
 

@@ -53,7 +53,7 @@ struct LightGridNeighbors {
 }
 
 impl LightGrid {
-    fn neighbors(&self, position: (usize, usize)) -> LightGridNeighbors {
+    const fn neighbors(&self, position: (usize, usize)) -> LightGridNeighbors {
         LightGridNeighbors {
             size: self.size,
             idx: 0,
@@ -61,7 +61,7 @@ impl LightGrid {
         }
     }
 
-    fn transform_1(&self) -> LightGrid {
+    fn transform_1(&self) -> Self {
         let data = self
             .data
             .iter()
@@ -79,13 +79,13 @@ impl LightGrid {
                 }
             })
             .collect();
-        LightGrid {
+        Self {
             size: self.size,
             data,
         }
     }
 
-    fn transform_2(&self) -> LightGrid {
+    fn transform_2(&self) -> Self {
         let mut new = self.transform_1();
         let (w, h) = self.size;
         new[(0, 0)] = true;
@@ -158,7 +158,7 @@ impl Display for LightGrid {
 impl FromStr for LightGrid {
     type Err = Error;
 
-    fn from_str(s: &str) -> anyhow::Result<LightGrid> {
+    fn from_str(s: &str) -> anyhow::Result<Self> {
         let lines: Vec<_> = s.lines().collect();
         if lines.is_empty() {
             return Err(anyhow!("empty string"));
@@ -178,7 +178,7 @@ impl FromStr for LightGrid {
                 }
             }
         }
-        Ok(LightGrid { size: (w, h), data })
+        Ok(Self { size: (w, h), data })
     }
 }
 

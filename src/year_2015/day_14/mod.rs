@@ -89,7 +89,7 @@ fn parse_reindeers(input: &str) -> anyhow::Result<Reindeers<'_>> {
         .collect()
 }
 
-fn compute_at_time(mobility: &Mobility, time: usize) -> usize {
+const fn compute_at_time(mobility: &Mobility, time: usize) -> usize {
     let cycle_time = mobility.duration + mobility.rest_time;
     let cycle_count = time / cycle_time;
     let remaining_time = time - cycle_count * cycle_time;

@@ -21,7 +21,7 @@ pub fn part1(input: &str) -> u64 {
     nr
 }
 
-fn get_grid_index(row: u64, column: u64) -> u64 {
+const fn get_grid_index(row: u64, column: u64) -> u64 {
     (row + column + 1) * (row + column) / 2 + column
 }
 
@@ -39,10 +39,12 @@ fn parse_input(input: &str) -> anyhow::Result<(u64, u64)> {
         return Err(anyhow!("invalid prefix"));
     }
     let input = &input[PREFIX.len()..];
-    let idx = input.find(MID).ok_or(anyhow!("no mid found"))?;
+    let idx = input.find(MID).ok_or_else(|| anyhow!("no mid found"))?;
     let row = input[0..idx].parse()?;
     let input = &input[idx + MID.len()..];
-    let idx = input.find(SUFFIX).ok_or(anyhow!("no suffix found"))?;
+    let idx = input
+        .find(SUFFIX)
+        .ok_or_else(|| anyhow!("no suffix found"))?;
     let column = input[0..idx].parse()?;
     let input = &input[idx + SUFFIX.len()..];
     if !input.is_empty() {

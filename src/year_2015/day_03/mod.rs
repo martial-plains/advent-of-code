@@ -57,10 +57,10 @@ enum Direction {
 impl From<char> for Direction {
     fn from(value: char) -> Self {
         match value {
-            '^' => Direction::North,
-            '>' => Direction::East,
-            'v' => Direction::South,
-            '<' => Direction::West,
+            '^' => Self::North,
+            '>' => Self::East,
+            'v' => Self::South,
+            '<' => Self::West,
             _ => unreachable!(),
         }
     }

@@ -66,7 +66,7 @@ struct Point {
 
 impl Point {
     fn from_matches(matches: &mut Matches) -> Self {
-        Point {
+        Self {
             x: matches.next().unwrap().as_str().parse().unwrap(),
             y: matches.next().unwrap().as_str().parse().unwrap(),
         }

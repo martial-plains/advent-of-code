@@ -73,7 +73,9 @@ fn parse_line(line: &str) -> anyhow::Result<Sue> {
     let main = Regex::new(r"^Sue (?P<index>\d+): (?P<props>.+)$").unwrap();
     let prop = Regex::new(r"(?P<key>[[:alpha:]]+): (?P<value>\d+)(, )?").unwrap();
 
-    let captures = main.captures(line).ok_or(anyhow!("invalid format"))?;
+    let captures = main
+        .captures(line)
+        .ok_or_else(|| anyhow!("invalid format"))?;
     let index = captures["index"].parse().unwrap();
     let props = captures.name("props").unwrap().as_str();
     let properties = prop
