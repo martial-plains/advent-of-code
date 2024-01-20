@@ -21,6 +21,11 @@ pub fn part1(input: &str) -> u64 {
     nr
 }
 
+#[must_use]
+pub const fn part2(_: &str) -> u64 {
+    0
+}
+
 const fn get_grid_index(row: u64, column: u64) -> u64 {
     (row + column + 1) * (row + column) / 2 + column
 }
