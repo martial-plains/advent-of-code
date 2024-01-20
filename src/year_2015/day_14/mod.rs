@@ -23,7 +23,7 @@ pub fn part1(input: &str) -> usize {
 ///
 /// Panics if input is empty.
 #[must_use]
-pub fn part2(input: &str, time: usize) -> usize {
+pub fn part2_with_time(input: &str, time: usize) -> usize {
     let mut states = parse_reindeers(input)
         .unwrap()
         .into_values()
@@ -50,6 +50,11 @@ pub fn part2(input: &str, time: usize) -> usize {
     }
 
     states.into_iter().map(|x| x.points).max().unwrap()
+}
+
+#[must_use]
+pub fn part2(input: &str) -> usize {
+    part2_with_time(input, 2503)
 }
 
 type Reindeers<'a> = HashMap<&'a str, Mobility>;
@@ -112,6 +117,6 @@ mod tests {
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(part2(INPUT, 2503), 1102);
+        assert_eq!(part2_with_time(INPUT, 2503), 1102);
     }
 }
