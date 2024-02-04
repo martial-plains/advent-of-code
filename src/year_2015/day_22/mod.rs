@@ -213,7 +213,7 @@ fn parse_input(input: &str) -> anyhow::Result<Boss> {
     use regex::Regex;
     lazy_static! {
         static ref RE: Regex =
-            Regex::new(r"^Hit Points: (?P<hp>\d+)\nDamage: (?P<damage>\d+)$").unwrap();
+            Regex::new(r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)$").unwrap();
     };
     let captures = RE.captures(input).ok_or_else(|| anyhow!("invalid input"))?;
     let hp = captures["hp"].parse()?;

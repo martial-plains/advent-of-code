@@ -1,5 +1,5 @@
 use anyhow::anyhow;
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 
 pub const TITLE: &str = "Science for Hungry People";
 
@@ -113,7 +113,7 @@ struct Ingredient {
 }
 
 fn parse_ingredients(input: &str) -> Vec<Ingredient> {
-    let re = Regex::new(r"(?m)^(?P<n>[[:alpha:]]+): capacity (?P<capacity>-?\d+), durability (?P<durability>-?\d+), flavor (?P<flavor>-?\d+), texture (?P<texture>-?\d+), calories (?P<calories>-?\d+)$").unwrap();
+    let re = RegexBuilder::new(r"^(?P<n>[[:alpha:]]+): capacity (?P<capacity>-?\d+), durability (?P<durability>-?\d+), flavor (?P<flavor>-?\d+), texture (?P<texture>-?\d+), calories (?P<calories>-?\d+)").multi_line(true).build().unwrap();
     re.captures_iter(input)
         .map(|m| Ingredient {
             capacity: m["capacity"].parse().unwrap(),

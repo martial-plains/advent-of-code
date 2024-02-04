@@ -151,7 +151,7 @@ fn parse_input(input: &str) -> anyhow::Result<Unit> {
     use regex::Regex;
     lazy_static! {
         static ref RE: Regex = Regex::new(
-            r"^Hit Points: (?P<hp>\d+)\nDamage: (?P<damage>\d+)\nArmor: (?P<armor>\d+)$"
+            r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)\r?\nArmor: (?P<armor>\d+)$"
         )
         .unwrap();
     };
