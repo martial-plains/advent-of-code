@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 
 pub const TITLE: &str = "Reindeer Olympics";
 
@@ -74,7 +74,7 @@ struct State {
 }
 
 fn parse_reindeers(input: &str) -> anyhow::Result<Reindeers<'_>> {
-    let re = Regex::new(r"(?m)^(?P<n>[[:alpha:]]+) can fly (?P<s>\d+) km/s for (?P<d>\d+) seconds, but then must rest for (?P<r>\d+) seconds\.$").unwrap();
+    let re = RegexBuilder::new(r"^(?P<n>[[:alpha:]]+) can fly (?P<s>\d+) km/s for (?P<d>\d+) seconds, but then must rest for (?P<r>\d+) seconds\.").multi_line(true).build().unwrap();
 
     re.captures_iter(input)
         .map(|m| {

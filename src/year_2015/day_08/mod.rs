@@ -7,7 +7,7 @@ pub const INPUT: &str = include_str!("input.txt");
 #[must_use]
 pub fn part1(input: &str) -> usize {
     input
-        .split('\n')
+        .lines()
         .filter(|line| line.len() >= 2)
         .map(|line| {
             let trimmed = &line[1..line.len() - 1];
@@ -67,7 +67,7 @@ pub fn part1(input: &str) -> usize {
 #[must_use]
 pub fn part2(input: &str) -> usize {
     input
-        .split('\n')
+        .lines()
         .filter(|line| line.len() >= 2)
         .map(|line| {
             let count = line.bytes().filter(|c| *c == b'"' || *c == b'\\').count();

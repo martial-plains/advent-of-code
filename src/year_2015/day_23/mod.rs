@@ -96,7 +96,7 @@ fn parse_input(input: &str) -> anyhow::Result<Vec<Instruction>> {
         Err(anyhow!("invalid register"))
     }
     input
-        .split('\n')
+        .lines()
         .map(|line| {
             if line.len() < 5 {
                 return Err(anyhow!("invalid instruction length"));

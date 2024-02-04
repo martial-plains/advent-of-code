@@ -48,7 +48,7 @@ type Routes = HashMap<Connection, usize>;
 fn transform(input: &str) -> (Place, Routes) {
     let mut place_names = HashMap::new();
     let results = input
-        .split('\n')
+        .lines()
         .filter_map(|line| {
             let to_idx = line.find(" to ")?;
             let eq_idx = line.find(" = ")?;

@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet};
 use anyhow::anyhow;
 
 use permutohedron::Heap;
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 
 pub const TITLE: &str = "Knights of the Dinner Table";
 
@@ -38,7 +38,7 @@ type People<'a> = HashSet<&'a str>;
 type Happiness<'a> = HashMap<(&'a str, &'a str), isize>;
 
 fn parse_happiness<'a>(input: &'a str) -> anyhow::Result<(People<'a>, Happiness<'a>)> {
-    let re = Regex::new(r"(?m)^(?P<f>[[:alpha:]]+) would (?P<n>gain|lose) (?P<a>\d+) happiness units by sitting next to (?P<t>[[:alpha:]]+)\.$").unwrap();
+    let re = RegexBuilder::new(r"^(?P<f>[[:alpha:]]+) would (?P<n>gain|lose) (?P<a>\d+) happiness units by sitting next to (?P<t>[[:alpha:]]+)\.").multi_line(true).build().unwrap();
 
     let happiness: Happiness<'a> = re
         .captures_iter(input)
