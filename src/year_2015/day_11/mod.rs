@@ -91,10 +91,12 @@ fn validate_input(input: &str) -> anyhow::Result<Vec<u8>> {
 mod tests {
     use super::*;
 
+    #[test]
     fn test_part1_puzzle() {
         assert_eq!(part1(INPUT), "hepxxyzz");
     }
 
+    #[test]
     fn test_part2_puzzle() {
         assert_eq!(part2(INPUT), "heqaabcc");
     }
