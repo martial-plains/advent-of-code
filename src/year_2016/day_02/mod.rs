@@ -6,7 +6,7 @@ use crate::shared::{
     point::Point,
 };
 
-pub const TITLE: &str = "No Time for a Taxicab";
+pub const TITLE: &str = "Bathroom Security";
 
 pub const INPUT: &str = include_str!("input.txt");
 
