@@ -16,7 +16,7 @@ impl Grid<u8> {
         let height = raw.len() as i32;
         let mut bytes = Vec::with_capacity((width * height) as usize);
         raw.iter().for_each(|slice| bytes.extend_from_slice(slice));
-        Grid {
+        Self {
             width,
             height,
             bytes,
@@ -43,7 +43,7 @@ impl<T: Copy + PartialEq> Grid<T> {
     }
 
     #[inline]
-    pub fn contains(&self, point: Point) -> bool {
+    pub const fn contains(&self, point: Point) -> bool {
         point.x >= 0 && point.x < self.width && point.y >= 0 && point.y < self.height
     }
 }
