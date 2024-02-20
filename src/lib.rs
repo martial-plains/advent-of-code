@@ -1,4 +1,4 @@
-#![feature(trait_alias)]
+#![feature(trait_alias, iter_array_chunks)]
 #![warn(
     clippy::all,
     clippy::pedantic,
