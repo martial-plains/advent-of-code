@@ -48,6 +48,20 @@ impl Point {
     }
 }
 
+impl From<u8> for Point {
+    #[inline]
+    #[must_use]
+    fn from(value: u8) -> Self {
+        match value {
+            b'^' | b'U' => Self::UP,
+            b'v' | b'D' => Self::DOWN,
+            b'<' | b'L' => Self::LEFT,
+            b'>' | b'R' => Self::RIGHT,
+            _ => unreachable!(),
+        }
+    }
+}
+
 impl Add for Point {
     type Output = Self;
 
