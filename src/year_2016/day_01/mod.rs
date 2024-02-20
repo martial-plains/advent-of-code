@@ -74,6 +74,6 @@ mod tests {
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(part1(INPUT), 147);
+        assert_eq!(part2(INPUT), 147);
     }
 }
