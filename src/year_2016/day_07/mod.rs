@@ -92,11 +92,11 @@ pub fn part2(input: &str) -> usize {
     count
 }
 
-fn is_palindrome(w: &[u8]) -> bool {
+const fn is_palindrome(w: &[u8]) -> bool {
     w[0] == w[3] && w[1] == w[2] && w[0] != w[1]
 }
 
-fn bytes_to_indices(w: &[u8]) -> (usize, usize) {
+const fn bytes_to_indices(w: &[u8]) -> (usize, usize) {
     let first = (w[0] - b'a') as usize;
     let second = (w[1] - b'a') as usize;
     (first, second)
