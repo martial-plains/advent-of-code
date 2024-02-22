@@ -64,6 +64,6 @@ mod tests {
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(part2(INPUT), "ryrgviuvq");
+        assert_eq!(part2(INPUT), "ryrgviuv");
     }
 }
