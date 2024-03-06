@@ -5,7 +5,7 @@
     clippy::nursery,
     missing_debug_implementations
 )]
-#![allow(unused)]
+#![allow(unused, clippy::cast_sign_loss, clippy::cast_possible_wrap)]
 pub mod year_2015;
 pub mod year_2016;
 
