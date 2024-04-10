@@ -22,9 +22,7 @@ pub fn part1(input: &str) -> isize {
     let target = Location { x: 31, y: 39 };
     let mut distance = HashMap::new();
 
-    measure(|| {
-        distance = dijkstra(Location { x: 1, y: 1 }, Some(target), isize::MAX);
-    });
+    distance = dijkstra(Location { x: 1, y: 1 }, Some(target), isize::MAX);
 
     distance[&target]
 }
@@ -37,9 +35,7 @@ pub fn part2(input: &str) -> usize {
     let max_distance = 50;
     let mut distance = HashMap::new();
 
-    measure(|| {
-        distance = dijkstra(Location { x: 1, y: 1 }, None, max_distance);
-    });
+    distance = dijkstra(Location { x: 1, y: 1 }, None, max_distance);
 
     distance.len()
 }
@@ -166,15 +162,6 @@ fn dijkstra(
         }
     }
     distance
-}
-
-fn measure<F: FnOnce()>(code: F) {
-    let start = Instant::now();
-    code();
-    let end = Instant::now();
-    let duration = end.duration_since(start);
-    let time_interval = duration.as_secs_f64(); // Convert to seconds
-    info!("Code ran {time_interval:.6} seconds");
 }
 
 #[cfg(test)]
