@@ -171,3 +171,18 @@ fn hash(to_hash: &str) -> String {
     let digest = md5.finalize();
     format!("{digest:x}")
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1_puzzle() {
+        assert_eq!(part1(INPUT), "RDDRULDDRR");
+    }
+
+    #[test]
+    fn test_part2_puzzle() {
+        assert_eq!(part2(INPUT), 766);
+    }
+}
