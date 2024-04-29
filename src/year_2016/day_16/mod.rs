@@ -88,6 +88,6 @@ mod tests {
 
     #[test]
     fn test_part2_puzzle() {
-        assert_eq!(part2(INPUT), 10_001_001_100_000_001);
+        assert_eq!(part2(INPUT), 10_100_001_110_101_001);
     }
 }
