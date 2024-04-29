@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-pub const TITLE: &str = "Timing is Everything";
+pub const TITLE: &str = "Dragon Checksum";
 
 pub const INPUT: &str = "10001001100000001";
 
