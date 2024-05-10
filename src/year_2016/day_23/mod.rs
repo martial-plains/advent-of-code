@@ -1,3 +1,5 @@
+use std::io::{self, BufRead};
+
 pub const TITLE: &str = "Safe Cracking";
 
 pub const INPUT: &str = include_str!("input.txt");
@@ -29,8 +31,6 @@ pub fn part2(input: &str) -> i64 {
     run_program(&mut prog, &mut state);
     state.regs[0]
 }
-
-use std::io::{self, BufRead};
 
 #[derive(Debug, Clone, Copy)]
 enum InstrOp {
