@@ -103,7 +103,7 @@ impl PartialOrd for State {
 fn parse_input(input: &str, part2: bool) -> Result<[Floor; 4]> {
     let mut name_to_id = HashMap::new();
     let mut current_id = 0_u8;
-    let mut initial_floors = [Floor::default();4];
+    let mut initial_floors = [Floor::default(); 4];
 
     for (floor_idx, line) in input.lines().enumerate() {
         let words = line.split(' ').collect::<Vec<_>>();
@@ -111,7 +111,8 @@ fn parse_input(input: &str, part2: bool) -> Result<[Floor; 4]> {
             let (isotope_name, microchip) = if word_idx > 0 && word.starts_with("microchip") {
                 let isotope_name = words[word_idx - 1]
                     .strip_suffix("-compatible")
-                    .ok_or("Invalid syntax - not $ISOTYPE-compatible before 'microchip'").map_err(|error| anyhow!(error))?;
+                    .ok_or("Invalid syntax - not $ISOTYPE-compatible before 'microchip'")
+                    .map_err(|error| anyhow!(error))?;
                 (isotope_name, true)
             } else if word_idx > 0 && word.starts_with("generator") {
                 let isotope_name = words[word_idx - 1];
@@ -151,7 +152,7 @@ fn parse_input(input: &str, part2: bool) -> Result<[Floor; 4]> {
     Ok(initial_floors)
 }
 
-pub fn solve(input: &str, part2: bool) -> Result<u32> {
+fn solve(input: &str, part2: bool) -> Result<u32> {
     let initial_floors = parse_input(input, part2)?;
     let mut to_visit = BinaryHeap::new();
     let mut visited_states = HashSet::new();
