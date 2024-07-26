@@ -3,10 +3,10 @@ use std::{
     hash::Hash,
     io::{Bytes, Read, Write},
     ops::Range,
+    sync::LazyLock,
 };
 
 use itertools::Itertools;
-use lazy_static::lazy_static;
 use md5::{digest::generic_array::GenericArray, Digest, Md5};
 
 pub const TITLE: &str = "Two Steps Forward";
@@ -29,10 +29,8 @@ pub fn part2(input: &str) -> usize {
     find_longest_path(*GOAL, input, &BOUNDS).len()
 }
 
-lazy_static! {
-    static ref GOAL: Coordinate = Coordinate::new(3, 3);
-    static ref BOUNDS: Bounds = Bounds::new(0..4, 0..4);
-}
+static GOAL: LazyLock<Coordinate> = LazyLock::new(|| Coordinate::new(3, 3));
+static BOUNDS: LazyLock<Bounds> = LazyLock::new(|| Bounds::new(0..4, 0..4));
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
 enum Direction {

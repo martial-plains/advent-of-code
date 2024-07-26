@@ -1,6 +1,7 @@
+use std::sync::LazyLock;
+
 use anyhow::anyhow;
 use arrayvec::ArrayVec;
-use lazy_static::lazy_static;
 
 pub const TITLE: &str = "Wizard Simulator 20XX";
 
@@ -211,10 +212,10 @@ impl State {
 
 fn parse_input(input: &str) -> anyhow::Result<Boss> {
     use regex::Regex;
-    lazy_static! {
-        static ref RE: Regex =
-            Regex::new(r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)$").unwrap();
-    };
+    static RE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)$").unwrap()
+    });
+
     let captures = RE.captures(input).ok_or_else(|| anyhow!("invalid input"))?;
     let hp = captures["hp"].parse()?;
     let damage = captures["damage"].parse()?;
