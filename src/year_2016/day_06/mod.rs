@@ -10,18 +10,6 @@ pub const TITLE: &str = "Signals and Noise";
 pub const INPUT: &str = include_str!("input.txt");
 
 #[must_use]
-pub fn calculate_frequency(input: &str) -> Vec<[usize; 26]> {
-    let width = input.lines().next().unwrap().len();
-    let mut freq = vec![[0; 26]; width];
-
-    for (i, b) in input.bytes().filter(u8::is_ascii_lowercase).enumerate() {
-        freq[i % width][(b - b'a') as usize] += 1;
-    }
-
-    freq
-}
-
-#[must_use]
 pub fn part1(input: &str) -> String {
     let freq = calculate_frequency(input);
 
@@ -51,6 +39,18 @@ pub fn part2(input: &str) -> String {
         })
         .map(|(index, _)| ((index as u8) + b'a') as char)
         .collect()
+}
+
+#[must_use]
+fn calculate_frequency(input: &str) -> Vec<[usize; 26]> {
+    let width = input.lines().next().unwrap().len();
+    let mut freq = vec![[0; 26]; width];
+
+    for (i, b) in input.bytes().filter(u8::is_ascii_lowercase).enumerate() {
+        freq[i % width][(b - b'a') as usize] += 1;
+    }
+
+    freq
 }
 
 #[cfg(test)]
