@@ -1,4 +1,4 @@
-use lazy_static::lazy_static;
+use std::{cell::LazyCell, sync::LazyLock};
 
 pub const TITLE: &str = "Infinite Elves and Infinite Houses";
 
@@ -47,9 +47,7 @@ pub fn part2(input: &str) -> u64 {
     unreachable!()
 }
 
-lazy_static! {
-    static ref SIEVE: primal::Sieve = primal::Sieve::new(100_000_000);
-}
+static SIEVE: LazyLock<primal::Sieve> = LazyLock::new(|| primal::Sieve::new(100_000_000));
 
 /// Iterates over all the positive integer divisors of a number (by doing
 /// prime factorization and combinations). It then applies function f over

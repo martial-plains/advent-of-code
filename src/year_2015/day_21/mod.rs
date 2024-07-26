@@ -1,5 +1,6 @@
+use std::sync::LazyLock;
+
 use anyhow::anyhow;
-use lazy_static::lazy_static;
 
 pub const TITLE: &str = "RPG Simulator 20XX";
 
@@ -149,12 +150,12 @@ const fn does_player_win_fight(boss: &Unit, loadout: &Loadout) -> bool {
 
 fn parse_input(input: &str) -> anyhow::Result<Unit> {
     use regex::Regex;
-    lazy_static! {
-        static ref RE: Regex = Regex::new(
-            r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)\r?\nArmor: (?P<armor>\d+)$"
+    static RE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(
+            r"^Hit Points: (?P<hp>\d+)\r?\nDamage: (?P<damage>\d+)\r?\nArmor: (?P<armor>\d+)$",
         )
-        .unwrap();
-    };
+        .unwrap()
+    });
     let captures = RE.captures(input).ok_or_else(|| anyhow!("invalid input"))?;
     let hp = captures["hp"].parse()?;
     let damage = captures["damage"].parse()?;
