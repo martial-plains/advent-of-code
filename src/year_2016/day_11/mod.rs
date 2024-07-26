@@ -128,7 +128,7 @@ fn parse_input(input: &str, part2: bool) -> Result<[Floor; 4]> {
                     current_id - 1
                 });
             if isotope_id == 6 {
-                return bail!("Too many isotopes - max supported is 5");
+                return Err(anyhow!("Too many isotopes - max supported is 5"));
             }
             let bit_mask = 1 << isotope_id;
 

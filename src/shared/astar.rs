@@ -110,7 +110,7 @@ impl<N: Node, C: Cost> AStar<N, C> {
                 // Reconstruct the path
                 let mut current_node = Some(&open.node);
                 while let Some(n) = current_node {
-                    let meta = &self.meta[&n];
+                    let meta = &self.meta[n];
                     self.path.push((n.clone(), meta.path.clone()));
                     current_node = meta.parent.as_ref();
                 }

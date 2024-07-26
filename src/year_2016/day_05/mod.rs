@@ -124,7 +124,7 @@ fn worker(shared: &Shared, mutex: &Mutex<Exclusive>) {
 
         for n in 0..1000 {
             // Format macro is very slow, so update digits directly
-            buffer[size - 3] = b'0' + (n / 100) as u8;
+            buffer[size - 3] = b'0' + u8::try_from(n / 100).unwrap();
             buffer[size - 2] = b'0' + ((n / 10) % 10) as u8;
             buffer[size - 1] = b'0' + (n % 10) as u8;
 

@@ -51,11 +51,14 @@ fn uncompressed_size(text: &[u8], recursive: bool) -> anyhow::Result<u64> {
                     .map_err(error_mapper_parse)?;
                 uncompressed_len += repetitions
                     * if recursive {
-                        uncompressed_size(&text[i + 1..i + 1 + chars_to_take as usize], true)?
+                        uncompressed_size(
+                            &text[i + 1..i + 1 + usize::try_from(chars_to_take).unwrap()],
+                            true,
+                        )?
                     } else {
                         chars_to_take
                     };
-                i += chars_to_take as usize;
+                i += usize::try_from(chars_to_take).unwrap();
                 start_parenthesis_idx = None;
             }
         } else if start_parenthesis_idx.is_none() {

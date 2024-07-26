@@ -114,14 +114,14 @@ fn check_keys(
 ) {
     while !shared.done.load(Ordering::Relaxed) {
         let n = shared.counter.fetch_add(1, Ordering::Relaxed);
-        let (a, b, c, d) = md5(n);
+        let words: [u32; 4] = md5(n).into();
 
         let mut prev = u32::MAX;
         let mut same = 1;
         let mut three = 0;
         let mut five = 0;
 
-        for mut word in [d, c, b, a] {
+        for mut word in words.into_iter().rev() {
             for _ in 0..8 {
                 let next = word & 0xf;
 

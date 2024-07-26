@@ -9,6 +9,8 @@ pub const TITLE: &str = "Signals and Noise";
 
 pub const INPUT: &str = include_str!("input.txt");
 
+/// # Panics
+/// Panics if input is empty
 #[must_use]
 pub fn part1(input: &str) -> String {
     let freq = calculate_frequency(input);
@@ -21,10 +23,12 @@ pub fn part1(input: &str) -> String {
                 .max_by_key(|(_, f)| **f)
                 .unwrap()
         })
-        .map(|(index, _)| ((index as u8) + b'a') as char)
+        .map(|(index, _)| (u8::try_from(index).unwrap() + b'a') as char)
         .collect()
 }
 
+/// # Panics
+/// Panics if input is empty
 #[must_use]
 pub fn part2(input: &str) -> String {
     let freq = calculate_frequency(input);
@@ -37,7 +41,7 @@ pub fn part2(input: &str) -> String {
                 .min_by_key(|(_, f)| **f)
                 .unwrap()
         })
-        .map(|(index, _)| ((index as u8) + b'a') as char)
+        .map(|(index, _)| (u8::try_from(index).unwrap() + b'a') as char)
         .collect()
 }
 
