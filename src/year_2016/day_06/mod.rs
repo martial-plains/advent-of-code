@@ -1,10 +1,3 @@
-use algorithms::higher_order_functions::Reductions;
-
-use crate::shared::{
-    hash::{FastSet, FastSetBuilder},
-    point::Point,
-};
-
 pub const TITLE: &str = "Signals and Noise";
 
 pub const INPUT: &str = include_str!("input.txt");

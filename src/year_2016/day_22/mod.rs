@@ -1,6 +1,4 @@
-use std::{array, collections::VecDeque};
-
-use itertools::Itertools;
+use std::collections::VecDeque;
 
 pub const TITLE: &str = "Grid Computing";
 
@@ -61,7 +59,7 @@ pub fn part2(input: &str) -> usize {
     let payload_pos = (dimensions.0 - 1, 0);
     let dist_to_payload = dist(dimensions, grid.clone(), empty_pos, payload_pos).unwrap();
     let dist_to_home = dist(dimensions, grid, (payload_pos.0 - 1, payload_pos.1), (0, 0)).unwrap();
-    (dist_to_payload + 5 * dist_to_home)
+    dist_to_payload + 5 * dist_to_home
 }
 
 #[derive(Debug, Default, Clone, PartialEq, PartialOrd)]

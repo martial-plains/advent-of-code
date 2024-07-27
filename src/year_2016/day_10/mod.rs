@@ -1,9 +1,7 @@
-use std::collections::{HashMap, VecDeque};
+use std::collections::HashMap;
 use std::str::FromStr;
 
-use crate::shared::hash::{FastMap, FastMapBuilder};
-
-use anyhow::{anyhow, bail, Result};
+use anyhow::Result;
 
 use itertools::Itertools;
 use sscanf::scanf;

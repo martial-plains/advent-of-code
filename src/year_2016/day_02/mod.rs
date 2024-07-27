@@ -1,10 +1,4 @@
-use algorithms::higher_order_functions::Reductions;
-
-use crate::shared::{
-    grid::Grid,
-    hash::{FastSet, FastSetBuilder},
-    point::Point,
-};
+use crate::shared::{grid::Grid, point::Point};
 
 pub const TITLE: &str = "Bathroom Security";
 
@@ -50,10 +44,6 @@ pub fn part2(input: &str) -> String {
     }
 
     result
-}
-
-fn parse(input: &str) -> Vec<String> {
-    input.split(',').map(str::trim).map(str::to_owned).collect()
 }
 
 #[cfg(test)]

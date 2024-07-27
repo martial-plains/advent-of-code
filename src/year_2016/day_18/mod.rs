@@ -42,7 +42,6 @@ const fn is_trap(position: usize, previous_row: &[bool]) -> bool {
 
 const fn tile_for_row(position: usize, previous_row: &[bool]) -> bool {
     let left = is_trap(position.wrapping_sub(1), previous_row);
-    let center = is_trap(position, previous_row);
     let right = is_trap(position + 1, previous_row);
 
     !left && right || left && !right

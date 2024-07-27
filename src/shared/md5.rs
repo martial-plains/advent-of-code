@@ -1,9 +1,5 @@
 #![allow(clippy::many_single_char_names)]
 
-pub const fn buffer_size(n: usize) -> usize {
-    (n + 9).next_multiple_of(64)
-}
-
 pub fn hash(mut buffer: &mut [u8], size: usize) -> (u32, u32, u32, u32) {
     let end = buffer.len() - 8;
     let bits = size * 8;

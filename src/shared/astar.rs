@@ -20,7 +20,6 @@ pub struct AStar<N: Node, C: Cost> {
 #[derive(Debug, Clone)]
 struct Meta<N: Node, C: Cost> {
     is_closed: bool,
-    heuristic: C,
     path: C,
     parent: Option<N>,
 }
@@ -85,7 +84,6 @@ impl<N: Node, C: Cost> AStar<N, C> {
         let init_meta = Meta {
             is_closed: false,
             path: C::zero(),
-            heuristic: init_heuristic.clone(),
             parent: None,
         };
         self.meta.insert(init.clone(), init_meta);
@@ -97,7 +95,7 @@ impl<N: Node, C: Cost> AStar<N, C> {
         self.open.push(init_open);
 
         while let Some(open) = self.open.pop() {
-            let meta = self.meta.get_mut(&open.node).unwrap();
+            let meta = self.meta.get_mut(&open.node)?;
             // This can happen if the same node was inserted multiple times into the
             // open set, because a later found route to the same node actually had a
             // shorter total length.
@@ -149,7 +147,6 @@ impl<N: Node, C: Cost> AStar<N, C> {
                         Meta {
                             is_closed: false,
                             path: path_cost.clone(),
-                            heuristic: heuristic_cost.clone(),
                             parent: Some(open.node.clone()),
                         },
                     );

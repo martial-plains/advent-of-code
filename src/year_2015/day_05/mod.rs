@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use itertools::Itertools;
 
 pub const TITLE: &str = "Doesn't He Have Intern-Elves For This?";
@@ -56,10 +54,6 @@ fn repeated_either_side_of_one_character(string: &&str) -> bool {
         .windows(3)
         .map(|s| std::str::from_utf8(s).unwrap())
         .any(|substring| substring.chars().next() == substring.chars().last())
-}
-
-fn parse(input: &str) -> Vec<&[u8]> {
-    input.lines().map(str::as_bytes).collect()
 }
 
 #[cfg(test)]

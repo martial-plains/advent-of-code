@@ -1,5 +1,4 @@
-use std::collections::{HashMap, HashSet, VecDeque};
-use std::io::{self, BufRead};
+use std::collections::{HashMap, VecDeque};
 
 pub const TITLE: &str = "Air Duct Spelunking";
 

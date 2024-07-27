@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet};
 use anyhow::anyhow;
 
 use permutohedron::Heap;
-use regex::{Regex, RegexBuilder};
+use regex::RegexBuilder;
 
 pub const TITLE: &str = "Knights of the Dinner Table";
 

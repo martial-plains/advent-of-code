@@ -49,19 +49,6 @@ pub fn part2(input: &str) -> usize {
     *left.front().unwrap()
 }
 
-fn next_index(start: usize, array: &[i32]) -> Option<usize> {
-    let mut candidate = (start + 1) % array.len();
-    for _ in 0..array.len() - 1 {
-        if array[candidate] != 0 {
-            return Some(candidate);
-        }
-
-        candidate = (candidate + 1) % array.len();
-    }
-
-    None
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

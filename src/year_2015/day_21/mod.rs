@@ -166,7 +166,6 @@ fn parse_input(input: &str) -> anyhow::Result<Unit> {
 
 #[cfg(test)]
 mod tests {
-    use anyhow::Ok;
 
     use super::*;
 

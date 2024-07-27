@@ -1,4 +1,4 @@
-use std::{cell::LazyCell, sync::LazyLock};
+use std::sync::LazyLock;
 
 pub const TITLE: &str = "Infinite Elves and Infinite Houses";
 
@@ -100,6 +100,7 @@ mod tests {
         assert_eq!(part1(INPUT), 831_600);
     }
 
+    #[test]
     fn test_part2_puzzle() {
         assert_eq!(part2(INPUT), 884_520);
     }

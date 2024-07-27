@@ -83,10 +83,6 @@ enum State {
     Hex02(u8),
 }
 
-const DOUBLE_QUOTE: u8 = 0x22;
-const BACKSLASH: u8 = 0x5c;
-const X_LOWER: u8 = 0x78;
-
 #[cfg(test)]
 mod tests {
     use super::*;

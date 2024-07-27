@@ -1,13 +1,7 @@
-use std::{
-    collections::VecDeque,
-    hash::Hash,
-    io::{Bytes, Read, Write},
-    ops::Range,
-    sync::LazyLock,
-};
+use std::{collections::VecDeque, ops::Range, sync::LazyLock};
 
 use itertools::Itertools;
-use md5::{digest::generic_array::GenericArray, Digest, Md5};
+use md5::{Digest, Md5};
 
 pub const TITLE: &str = "Two Steps Forward";
 

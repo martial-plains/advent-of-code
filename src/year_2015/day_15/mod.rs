@@ -1,5 +1,5 @@
 use anyhow::anyhow;
-use regex::{Regex, RegexBuilder};
+use regex::RegexBuilder;
 
 pub const TITLE: &str = "Science for Hungry People";
 

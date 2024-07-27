@@ -1,16 +1,4 @@
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    sync::{
-        atomic::{AtomicBool, AtomicI32, Ordering},
-        Mutex,
-    },
-    thread,
-};
-
-use algorithms::hashbrown::HashMap;
 use regex::Regex;
-
-use crate::shared::md5::hash;
 
 pub const TITLE: &str = "Timing is Everything";
 
@@ -27,7 +15,6 @@ pub fn part1(input: &str) -> i32 {
             .unwrap();
 
     for capture in re.captures_iter(input) {
-        let disc_number: usize = capture[1].parse().unwrap();
         let number_of_positions: usize = capture[2].parse().unwrap();
         let position_at_time: usize = capture[3].parse().unwrap();
 
@@ -59,7 +46,6 @@ pub fn part2(input: &str) -> i32 {
             .unwrap();
 
     for capture in re.captures_iter(input) {
-        let disc_number: usize = capture[1].parse().unwrap();
         let number_of_positions: usize = capture[2].parse().unwrap();
         let position_at_time: usize = capture[3].parse().unwrap();
 

@@ -1,5 +1,3 @@
-use std::collections::VecDeque;
-
 pub const TITLE: &str = "Firewall Rules";
 
 pub const INPUT: &str = include_str!("input.txt");
@@ -41,7 +39,7 @@ fn count_allowed(ranges: &[(usize, usize)]) -> usize {
 
     for &(low, high) in ranges {
         if last_high < low {
-            allowed_count += (low - last_high);
+            allowed_count += low - last_high;
         }
 
         last_high = if high == usize::MAX {

@@ -4,10 +4,7 @@ use std::{
         atomic::{AtomicBool, AtomicI32, Ordering},
         Mutex,
     },
-    thread,
 };
-
-use algorithms::hashbrown::HashMap;
 
 use crate::shared::md5::hash;
 
@@ -50,18 +47,6 @@ pub fn part2(input: &str) -> i32 {
         result
     };
     generate_pad(md5)
-}
-
-fn to_hash_chars(hash: &[u8]) -> [u8; 32] {
-    let mut hash_chars = [0_u8; 32];
-    for i in 0..32 {
-        hash_chars[i] = if i % 2 == 0 {
-            (hash[i / 2] & 0xF0) >> 4
-        } else {
-            hash[i / 2] & 0x0F
-        };
-    }
-    hash_chars
 }
 
 struct Shared {

@@ -1,5 +1,4 @@
 use anyhow::anyhow;
-use anyhow::bail;
 use anyhow::Result;
 
 pub const TITLE: &str = "Radioisotope Thermoelectric Generators";

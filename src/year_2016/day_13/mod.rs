@@ -1,14 +1,6 @@
-use std::{
-    collections::{HashMap, HashSet},
-    default,
-    time::Instant,
-};
-
-use anyhow::anyhow;
+use std::collections::{HashMap, HashSet};
 
 use itertools::Itertools;
-use log::info;
-use num::abs;
 
 pub const TITLE: &str = "A Maze of Twisty Little Cubicles";
 
@@ -20,9 +12,8 @@ pub const INPUT: &str = "1362";
 #[must_use]
 pub fn part1(input: &str) -> isize {
     let target = Location { x: 31, y: 39 };
-    let mut distance = HashMap::new();
 
-    distance = dijkstra(Location { x: 1, y: 1 }, Some(target), isize::MAX);
+    let distance = dijkstra(input, Location { x: 1, y: 1 }, Some(target), isize::MAX);
 
     distance[&target]
 }
@@ -33,9 +24,8 @@ pub fn part1(input: &str) -> isize {
 #[must_use]
 pub fn part2(input: &str) -> usize {
     let max_distance = 50;
-    let mut distance = HashMap::new();
 
-    distance = dijkstra(Location { x: 1, y: 1 }, None, max_distance);
+    let distance = dijkstra(input, Location { x: 1, y: 1 }, None, max_distance);
 
     distance.len()
 }
@@ -75,10 +65,10 @@ impl Location {
         }
     }
 
-    fn is_wall(&self) -> bool {
+    fn is_wall(&self, input: &str) -> bool {
         let multiplied =
             (self.x * self.x) + (3 * self.x) + (2 * self.x * self.y) + self.y + (self.y * self.y);
-        let sum = multiplied + INPUT.parse::<isize>().unwrap();
+        let sum = multiplied + input.parse::<isize>().unwrap();
 
         let as_bit_string = format!("{sum:b}");
         let count_ones = as_bit_string
@@ -92,18 +82,15 @@ impl Location {
     const fn within_bounds(&self) -> bool {
         self.x >= 0 && self.y >= 0
     }
-
-    fn distance(&self, other: Self) -> isize {
-        abs(self.x - other.x) + abs(self.y - other.y)
-    }
 }
 
 fn dijkstra(
+    input: &str,
     source: Location,
     target: Option<Location>,
     max_distance: isize,
 ) -> HashMap<Location, isize> {
-    fn neighbors_of(location: Location) -> Vec<Location> {
+    let neighbors_of = |location: Location| {
         [
             location.up(),
             location.down(),
@@ -111,10 +98,10 @@ fn dijkstra(
             location.right(),
         ]
         .iter()
-        .filter(|location| location.within_bounds() && !location.is_wall())
+        .filter(|location| location.within_bounds() && !location.is_wall(input))
         .copied()
         .collect_vec()
-    }
+    };
 
     let mut distance = HashMap::new();
     let mut previous = HashMap::new();
@@ -127,7 +114,7 @@ fn dijkstra(
     while !unvisited.is_empty() {
         let current = *distance
             .iter()
-            .filter(|(key, value)| unvisited.contains(key))
+            .filter(|(key, _)| unvisited.contains(key))
             .sorted_by(|a, b| a.1.cmp(b.1))
             .next()
             .unwrap()

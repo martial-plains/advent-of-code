@@ -1,7 +1,5 @@
 use itertools::Itertools;
 
-use crate::shared::point::Point;
-
 pub const TITLE: &str = "Two-Factor Authentication";
 
 pub const INPUT: &str = include_str!("input.txt");

@@ -91,8 +91,6 @@ fn parse(input: &str) -> (u16, u16) {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashMap;
-
     use super::*;
 
     #[test]

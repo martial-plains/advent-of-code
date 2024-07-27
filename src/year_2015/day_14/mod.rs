@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use regex::{Regex, RegexBuilder};
+use regex::RegexBuilder;
 
 pub const TITLE: &str = "Reindeer Olympics";
 

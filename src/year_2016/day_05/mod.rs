@@ -1,20 +1,11 @@
-use std::{
-    sync::{
-        atomic::{AtomicBool, AtomicU32, Ordering},
-        Mutex,
-    },
-    thread,
+use std::sync::{
+    atomic::{AtomicBool, AtomicU32, Ordering},
+    Mutex,
 };
 
 use rayon::iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 
 use crate::shared::md5::hash;
-
-use crate::shared::{
-    hash::{FastSet, FastSetBuilder},
-    md5,
-    point::Point,
-};
 
 pub const TITLE: &str = "How About a Nice Game of Chess?";
 

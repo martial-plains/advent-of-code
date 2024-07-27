@@ -1,6 +1,3 @@
-use std::collections::VecDeque;
-use std::io::{self, BufRead};
-
 pub const TITLE: &str = "Clock Signal";
 
 pub const INPUT: &str = include_str!("input.txt");
@@ -27,7 +24,7 @@ pub fn part1(input: &str) -> u32 {
 ///
 /// Panics if unable to parse input
 #[must_use]
-pub const fn part2(input: &str) -> usize {
+pub const fn part2(_: &str) -> usize {
     0
 }
 

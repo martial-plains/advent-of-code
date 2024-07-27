@@ -1,8 +1,4 @@
-use std::default;
-
 use algorithms::{hashbrown::HashMap, macros::hashmap};
-
-use anyhow::anyhow;
 
 use itertools::Itertools;
 
@@ -31,13 +27,6 @@ impl Computer {
         self.registers
             .entry(register.to_string())
             .and_modify(|inner| *inner = value);
-    }
-
-    fn copy(&mut self, from: &str, to: &str) {
-        let new_val = self.registers[to];
-        self.registers
-            .entry(to.to_string())
-            .and_modify(|inner| *inner = new_val);
     }
 
     fn decrement(&mut self, register: &str) {
@@ -103,10 +92,7 @@ impl<'s> Solver<'s> {
             } else if self.instructions[i as usize].starts_with("dec") {
                 self.computer.decrement(components[1]);
             } else {
-                panic!(
-                    "illegal instruction: {}",
-                    INPUT.chars().nth(i as usize).unwrap()
-                );
+                panic!("illegal instruction: {}", self.instructions[i as usize]);
             }
             i += 1;
         }

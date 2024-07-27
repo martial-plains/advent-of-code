@@ -1,7 +1,4 @@
-use std::{
-    hash::Hasher,
-    ops::{Add, AddAssign, Mul, Sub, SubAssign},
-};
+use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct Point {

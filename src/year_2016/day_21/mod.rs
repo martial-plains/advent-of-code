@@ -1,7 +1,5 @@
 use std::string::ToString;
 
-use itertools::Itertools;
-
 pub const TITLE: &str = "Scrambled Letters and Hash";
 
 pub const INPUT: &str = include_str!("input.txt");
@@ -38,10 +36,6 @@ pub fn part2(input: &str) -> String {
     answer
         .ok_or_else(|| "No solution found".to_string())
         .unwrap()
-}
-
-fn parse(input: &str) -> &str {
-    input.trim()
 }
 
 fn scramble(input: &str, password: &mut [u8]) -> Result<(), String> {

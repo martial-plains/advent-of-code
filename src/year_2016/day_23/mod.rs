@@ -1,5 +1,3 @@
-use std::io::{self, BufRead};
-
 pub const TITLE: &str = "Safe Cracking";
 
 pub const INPUT: &str = include_str!("input.txt");

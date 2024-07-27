@@ -1,9 +1,6 @@
 use crate::shared::md5::hash;
 
-use std::{
-    sync::atomic::{AtomicBool, AtomicU32, Ordering},
-    thread,
-};
+use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 
 use rayon::prelude::*;
 

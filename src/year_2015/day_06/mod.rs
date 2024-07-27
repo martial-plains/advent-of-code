@@ -1,7 +1,4 @@
-use std::{
-    cmp::{max, min},
-    ops::RangeInclusive,
-};
+use std::cmp::{max, min};
 
 use regex::{Matches, Regex};
 

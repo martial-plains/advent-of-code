@@ -22,9 +22,6 @@ pub fn part2(input: &str) -> usize {
     *route_lengths(data).iter().max().unwrap()
 }
 
-type Edge = (String, String);
-type Path = (Vec<String>, usize);
-
 type Place = usize;
 
 #[derive(Copy, Clone, PartialEq, Eq, Hash, PartialOrd, Ord, Debug)]
