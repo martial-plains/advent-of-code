@@ -1,12 +1,4 @@
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    sync::{
-        atomic::{AtomicBool, AtomicI32, Ordering},
-        Mutex,
-    },
-};
-
-use crate::shared::md5::hash;
+use md5::{Digest, Md5};
 
 pub const TITLE: &str = "One-Time Pad";
 
@@ -16,162 +8,142 @@ pub const INPUT: &str = "ihaygndm";
 ///
 /// Panics if unable to parse input
 #[must_use]
-pub fn part1(input: &str) -> i32 {
-    let input = input.trim();
-
-    let md5 = |n| {
-        let (mut buffer, size) = format_string(input, n);
-        hash(&mut buffer, size)
-    };
-    generate_pad(md5)
+pub fn part1(input: &str) -> usize {
+    let mut finder = HashFinder::new(input.trim(), 1000, 0);
+    let mut index = 0usize;
+    for _ in 0..64 {
+        index = finder.next();
+    }
+    index
 }
 
 /// # Panics
 ///
 /// Panics if unable to parse input
 #[must_use]
-pub fn part2(input: &str) -> i32 {
-    let input = input.trim();
-    let md5 = |n| {
-        let (mut buffer, size) = format_string(input, n);
-        let mut result = hash(&mut buffer, size);
+pub fn part2(input: &str) -> usize {
+    let mut finder = HashFinder::new(input.trim(), 1000, 2016);
+    let mut index = 0usize;
+    for _ in 0..64 {
+        index = finder.next();
+    }
+    index
+}
 
-        for _ in 0..2016 {
-            buffer[0..8].copy_from_slice(&to_ascii(result.0));
-            buffer[8..16].copy_from_slice(&to_ascii(result.1));
-            buffer[16..24].copy_from_slice(&to_ascii(result.2));
-            buffer[24..32].copy_from_slice(&to_ascii(result.3));
-            result = hash(&mut buffer, 32);
+#[derive(Clone)]
+struct Hash {
+    value: [u8; 16],   // MD5 hash of salt + index
+    count: [u8; 16],   // Max consecutive 0-F in hash
+    tripl: Option<u8>, // First triplet, if one exists
+}
+
+struct HashFinder {
+    key: String,    // Key/salt for creating each Hash
+    stt: usize,     // Hash stretching parameter
+    idx: usize,     // Next index to be searched
+    buf: Vec<Hash>, // Circular buffer of Hash objects
+}
+
+fn to_digits(val: &[u8; 16]) -> [u8; 32] {
+    let mut digits = [0u8; 32];
+    for n in 0..16 {
+        digits[2 * n] = (val[n] >> 4) & 0xF;
+        digits[2 * n + 1] = val[n] & 0xF;
+    }
+    digits
+}
+
+fn to_hexstr(val: &[u8; 16]) -> [u8; 32] {
+    let mut hexstr = to_digits(val);
+    for x in &mut hexstr {
+        *x = if *x < 10 { *x + 0x30 } else { *x + 0x57 };
+    }
+    hexstr
+}
+
+impl Hash {
+    fn new(key: &str, index: usize, stretch: usize) -> Self {
+        // Calculate the initial MD5 hash.
+        let salt = format!("{key}{index}");
+        let mut hash = Self {
+            value: compute_md5(salt.as_bytes()).try_into().unwrap(),
+            count: [0; 16],
+            tripl: None,
+        };
+        // Hash stretching, if applicable...
+        for _ in 0..stretch {
+            hash.value = compute_md5(&to_hexstr(&hash.value)).try_into().unwrap();
         }
-
-        result
-    };
-    generate_pad(md5)
-}
-
-struct Shared {
-    done: AtomicBool,
-    counter: AtomicI32,
-}
-
-struct Exclusive {
-    threes: BTreeMap<i32, u32>,
-    fives: BTreeMap<i32, u32>,
-    found: BTreeSet<i32>,
-}
-
-fn format_string(prefix: &str, n: i32) -> ([u8; 64], usize) {
-    let string = format!("{prefix}{n}");
-    let size = string.len();
-
-    let mut buffer = [0; 64];
-    buffer[0..size].copy_from_slice(string.as_bytes());
-
-    (buffer, size)
-}
-
-fn generate_pad(md5: impl Fn(i32) -> (u32, u32, u32, u32) + Copy + Sync) -> i32 {
-    let shared = Shared {
-        done: AtomicBool::new(false),
-        counter: AtomicI32::new(0),
-    };
-    let exclusive = Exclusive {
-        threes: BTreeMap::new(),
-        fives: BTreeMap::new(),
-        found: BTreeSet::new(),
-    };
-    let mutex = Mutex::new(exclusive);
-
-    rayon::scope(|scope| {
-        for _ in 0..rayon::current_num_threads() {
-            scope.spawn(|_| check_keys(&shared, &mutex, md5));
+        // Count consecutive hexadecimal digits.
+        let digits = to_digits(&hash.value);
+        let mut prev = 0u8;
+        let mut count = 0u8;
+        for d in digits {
+            let n = d as usize;
+            count = if d == prev { count + 1 } else { 1 };
+            if count >= 3 && hash.tripl.is_none() {
+                hash.tripl = Some(d);
+            }
+            if count >= hash.count[n] {
+                hash.count[n] = count;
+            }
+            prev = d;
         }
-    });
+        hash
+    }
 
-    let exclusive = mutex.into_inner().unwrap();
-    *exclusive.found.iter().nth(63).unwrap()
-}
+    const fn has3(&self) -> Option<u8> {
+        self.tripl
+    }
 
-fn check_keys(
-    shared: &Shared,
-    mutex: &Mutex<Exclusive>,
-    md5: impl Fn(i32) -> (u32, u32, u32, u32),
-) {
-    while !shared.done.load(Ordering::Relaxed) {
-        let n = shared.counter.fetch_add(1, Ordering::Relaxed);
-        let words: [u32; 4] = md5(n).into();
-
-        let mut prev = u32::MAX;
-        let mut same = 1;
-        let mut three = 0;
-        let mut five = 0;
-
-        for mut word in words.into_iter().rev() {
-            for _ in 0..8 {
-                let next = word & 0xf;
-
-                if next == prev {
-                    same += 1;
-                } else {
-                    same = 1;
-                }
-
-                if same == 3 {
-                    three = 1 << next;
-                }
-                if same == 5 {
-                    five |= 1 << next;
-                }
-
-                word >>= 4;
-                prev = next;
-            }
-        }
-
-        if three != 0 || five != 0 {
-            let mut exclusive = mutex.lock().unwrap();
-            let mut candidates = Vec::new();
-
-            if three != 0 {
-                exclusive.threes.insert(n, three);
-
-                let fives = &exclusive.fives;
-                for (&index, &mask) in fives.range(n + 1..n + 1000) {
-                    if three & mask != 0 {
-                        candidates.push(index);
-                    }
-                }
-            }
-
-            if five != 0 {
-                exclusive.fives.insert(n, five);
-
-                let threes = &exclusive.threes;
-                for (&index, &mask) in threes.range(n - 1000..n - 1) {
-                    if five & mask != 0 {
-                        candidates.push(index);
-                    }
-                }
-            }
-
-            exclusive.found.extend(candidates);
-
-            if exclusive.found.len() >= 64 {
-                shared.done.store(true, Ordering::Relaxed);
-            }
-        }
+    const fn has5(&self, digit: u8) -> bool {
+        self.count[digit as usize] >= 5
     }
 }
 
-const fn to_ascii(n: u32) -> [u8; 8] {
-    let mut n = n as u64;
-    n = ((n << 16) & 0x0000_ffff_0000_0000) | (n & 0x0000_0000_0000_ffff);
-    n = ((n << 8) & 0x00ff_0000_00ff_0000) | (n & 0x0000_00ff_0000_00ff);
-    n = ((n << 4) & 0x0f00_0f00_0f00_0f00) | (n & 0x000f_000f_000f_000f);
+impl HashFinder {
+    fn new(key: &str, search: usize, stretch: usize) -> Self {
+        Self {
+            key: key.to_string(),
+            idx: 0usize,
+            stt: stretch,
+            buf: (0..=search).map(|n| Hash::new(key, n, stretch)).collect(),
+        }
+    }
 
-    let mask = ((n + 0x0606_0606_0606_0606) >> 4) & 0x0101_0101_0101_0101;
-    n = n + 0x3030_3030_3030_3030 + 0x27 * mask;
-    n.to_be_bytes()
+    fn test(&self) -> bool {
+        let m = self.idx % self.buf.len();
+        if let Some(d) = self.buf[m].has3() {
+            for offset in 1..self.buf.len() {
+                let n = (self.idx + offset) % self.buf.len();
+                if self.buf[n].has5(d) {
+                    return true;
+                }
+            }
+        }
+        false
+    }
+
+    fn incr(&mut self) {
+        let n = self.idx % self.buf.len();
+        self.buf[n] = Hash::new(&self.key, self.idx + self.buf.len(), self.stt);
+        self.idx += 1;
+    }
+
+    fn next(&mut self) -> usize {
+        while !self.test() {
+            self.incr();
+        }
+        self.incr(); // Get ready for next search...
+        self.idx - 1
+    }
+}
+
+fn compute_md5(to_hash: &[u8]) -> Vec<u8> {
+    let mut hash = Md5::new();
+    hash.update(to_hash);
+
+    hash.finalize().to_vec()
 }
 
 #[cfg(test)]
