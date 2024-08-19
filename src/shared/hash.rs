@@ -19,7 +19,7 @@ impl<T: Eq + Hash> FastSetBuilder<T> for FastSet<T> {
 }
 
 /// If you want an instance of [`FxHasher`] then this has you covered.
-#[derive(Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct BuildFxHasher;
 
 impl BuildHasher for BuildFxHasher {
@@ -37,6 +37,7 @@ impl BuildHasher for BuildFxHasher {
 /// for a full description.
 const K: u64 = 0x517c_c1b7_2722_0a95;
 
+#[derive(Debug)]
 pub struct FxHasher {
     hash: u64,
 }

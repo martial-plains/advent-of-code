@@ -2,7 +2,7 @@ use std::ops::{Index, IndexMut};
 
 use super::point::Point;
 
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Grid<T> {
     pub width: i32,
     pub height: i32,
