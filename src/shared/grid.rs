@@ -25,6 +25,7 @@ impl Grid<u8> {
 }
 
 impl<T: Copy + PartialEq> Grid<T> {
+    #[must_use]
     pub fn default_copy<U: Default + Copy>(&self) -> Grid<U> {
         Grid {
             width: self.width,
@@ -43,6 +44,7 @@ impl<T: Copy + PartialEq> Grid<T> {
     }
 
     #[inline]
+    #[must_use]
     pub const fn contains(&self, point: Point) -> bool {
         point.x >= 0 && point.x < self.width && point.y >= 0 && point.y < self.height
     }

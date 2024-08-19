@@ -52,6 +52,7 @@ impl<N: Node, C: Cost> Ord for Open<N, C> {
 }
 
 impl<N: Node, C: Cost> AStar<N, C> {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             meta: HashMap::new(),
@@ -60,6 +61,7 @@ impl<N: Node, C: Cost> AStar<N, C> {
         }
     }
 
+    #[must_use]
     pub fn into_last_path(self) -> Vec<(N, C)> {
         self.path
     }
