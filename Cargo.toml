@@ -11,7 +11,6 @@ algorithms = { git = "https://github.com/martial-plains/algorithms-rs", branch =
 anyhow = "1.0.86"
 arrayvec = "0.7.6"
 itertools = "0.13.0"
-lazy_static = "1.5.0"
 num = "0.4.3"
 permutohedron = "0.2.4"
 primal = "0.3.3"
