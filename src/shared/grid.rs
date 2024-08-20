@@ -10,6 +10,13 @@ pub struct Grid<T> {
 }
 
 impl Grid<u8> {
+    /// # Panics
+    ///
+    /// This function will panic if:
+    /// - The input string is empty or does not contain any lines.
+    /// - The length of the first line in the input string cannot be converted to an `i32`.
+    /// - The number of lines in the input string cannot be converted to an `i32`.
+    /// - The input string contains lines with different lengths, as the function assumes a uniform width for all lines.
     pub fn parse(input: &str) -> Self {
         let raw: Vec<_> = input.lines().map(str::as_bytes).collect();
         let width = i32::try_from(raw[0].len()).unwrap();
@@ -34,6 +41,11 @@ impl<T: Copy + PartialEq> Grid<T> {
         }
     }
 
+    /// # Panics
+    ///
+    /// This function will panic if:
+    /// - The index of the found element cannot be converted to an `i32`.
+    /// - The width of the structure (`self.width`) is zero, as division by zero will occur when calculating the `y` coordinate.
     pub fn find(&self, needle: T) -> Option<Point> {
         let to_point = |index| {
             let x = i32::try_from(index).unwrap() % self.width;
