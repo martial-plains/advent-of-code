@@ -1,0 +1,12 @@
+[package]
+name = "aoc-cli"
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+advent-of-code = { path = "../core" }
+clap = { workspace = true, features = ["derive"] }
