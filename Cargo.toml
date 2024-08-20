@@ -1,22 +1,26 @@
-[package]
-name = "advent-of-code"
-version = "0.1.0"
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+authors = ["Allister Isaiah Harvey <a.i.harvey@icloud.com>"]
 edition = "2021"
+homepage = "https://github.com/martial-plains/advent-of-code"
+license = "MIT"
+repository = "https://github.com/martial-plains/advent-of-code"
+version = "2023.0.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-
-[dependencies]
+[workspace.dependencies]
 algorithms = { git = "https://github.com/martial-plains/algorithms-rs", branch = "main" }
 anyhow = "1.0.86"
 arrayvec = "0.7.6"
 itertools = "0.13.0"
+log = "0.4.22"
+md-5 = "0.10.6"
 num = "0.4.3"
 permutohedron = "0.2.4"
 primal = "0.3.3"
 rayon = "1.10.0"
 regex = "1.10.6"
-sscanf = "0.4.2"
 serde_json = "1.0.125"
-log = "0.4.22"
-md-5 = "0.10.6"
+sscanf = "0.4.2"
