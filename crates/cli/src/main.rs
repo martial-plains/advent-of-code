@@ -26,16 +26,16 @@ use clap::Parser;
 #[command(author, version, about, long_about = None)]
 struct Cli {
     /// The year of the Advent of Code challenge (e.g., 2024).
-    year: u16,
+    pub year: u16,
 
     /// The day of the challenge within the Advent of Code event (1-25).
-    day: u8,
+    pub day: u8,
 
     /// The part of the day's challenge to solve (1 or 2).
-    part: u8,
+    pub part: u8,
 
     /// The path to the input file containing the puzzle data.
-    input_file: PathBuf,
+    pub input_file: PathBuf,
 }
 
 fn main() {
