@@ -4,7 +4,7 @@ use advent_of_code::solve;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
-#[command(version, about, long_about = None)]
+#[command(author, version, about, long_about = None)]
 struct Cli {
     year: u16,
     day: u8,
