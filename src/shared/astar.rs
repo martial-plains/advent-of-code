@@ -169,3 +169,9 @@ impl<N: Node, C: Cost> AStar<N, C> {
         None
     }
 }
+
+impl<N: Node, C: Cost> Default for AStar<N, C> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
