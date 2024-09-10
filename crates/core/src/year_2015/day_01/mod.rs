@@ -1,4 +1,4 @@
-use algorithms::higher_order_functions::Reductions;
+use algoritmer::higher_order_functions::Reductions;
 
 pub const TITLE: &str = "Not Quite Lisp";
 

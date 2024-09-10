@@ -15,7 +15,7 @@ repository.workspace = true
 
 
 [dependencies]
-algorithms = { workspace = true }
+algoritmer = { workspace = true }
 anyhow = { workspace = true }
 arrayvec = { workspace = true }
 itertools = { workspace = true }

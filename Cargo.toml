@@ -11,10 +11,11 @@ repository = "https://github.com/martial-plains/advent-of-code"
 version = "2023.0.0"
 
 [workspace.dependencies]
-algorithms = { git = "https://github.com/martial-plains/algorithms-rs", branch = "main" }
+algoritmer = { git = "https://github.com/martial-plains/algoritmer", branch = "main" }
 anyhow = "1.0.86"
 arrayvec = "0.7.6"
 clap = "4.5.16"
+hashbrown = "0.14.5"
 itertools = "0.13.0"
 log = "0.4.22"
 md-5 = "0.10.6"

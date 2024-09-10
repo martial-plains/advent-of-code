@@ -1,5 +1,6 @@
-use algorithms::{hashbrown::HashMap, macros::hashmap};
+use std::collections::HashMap;
 
+use algoritmer::hashmap;
 use itertools::Itertools;
 
 pub const TITLE: &str = "Leonardo's Monorail";
