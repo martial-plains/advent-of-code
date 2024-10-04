@@ -1,7 +1,6 @@
-use crate::shared::{
-    hash::{FastSet, FastSetBuilder},
-    point::Point,
-};
+use std::collections::HashSet;
+
+use crate::shared::point::Point;
 
 pub const TITLE: &str = "Perfectly Spherical Houses in a Vacuum";
 
@@ -28,7 +27,7 @@ pub fn part2(input: &str) -> usize {
 fn deliver(input: &[Point], predicate: fn(usize) -> bool) -> usize {
     let mut santa = Point::ORIGIN;
     let mut robot = Point::ORIGIN;
-    let mut set = FastSet::with_capacity(10_000);
+    let mut set = HashSet::with_capacity(10_000);
     set.insert(Point::ORIGIN);
 
     for (index, point) in input.iter().enumerate() {

@@ -1,7 +1,6 @@
-use crate::shared::{
-    hash::{FastSet, FastSetBuilder},
-    point::Point,
-};
+use std::collections::HashSet;
+
+use crate::shared::point::Point;
 
 pub const TITLE: &str = "No Time for a Taxicab";
 
@@ -35,7 +34,7 @@ pub fn part2(input: &str) -> i32 {
     let words = parse(input);
     let mut position = Point::ORIGIN;
     let mut direction = Point::UP;
-    let mut visited = FastSet::with_capacity(1000);
+    let mut visited = HashSet::with_capacity(1000);
 
     for step in words {
         direction = if step.starts_with('L') {
