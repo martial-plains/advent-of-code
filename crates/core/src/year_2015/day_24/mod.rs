@@ -78,9 +78,7 @@ fn solve(input: &str, buckets: u64) -> anyhow::Result<u64> {
     let mut remainder = Vec::new();
 
     let weight_per_bucket = total_weight / buckets;
-    for number_count in
-        1..(nrs.len() + usize::try_from(buckets).unwrap() - 1) / usize::try_from(buckets).unwrap()
-    {
+    for number_count in 1..nrs.len().div_ceil(usize::try_from(buckets).unwrap()) {
         fn backtrack(
             stack: &mut Vec<u64>,
             combinations: &mut Vec<Vec<u64>>,

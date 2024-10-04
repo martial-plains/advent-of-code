@@ -141,7 +141,7 @@ const fn does_player_win_fight(boss: &Unit, loadout: &Loadout) -> bool {
     let edmg_player = calculate_effective_damage(&player, boss);
     let edmg_boss = calculate_effective_damage(boss, &player);
 
-    let turns_to_kill_boss = (boss.hp + edmg_player - 1) / edmg_player;
+    let turns_to_kill_boss = boss.hp.div_ceil(edmg_player);
     let boss_damage_before_death = edmg_boss * (turns_to_kill_boss - 1);
 
     // Player survived the damage the boss would deal

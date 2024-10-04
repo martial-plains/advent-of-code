@@ -32,7 +32,7 @@ pub fn part2(input: &str) -> u64 {
         // where those divisors (the elves) haven't previously visited 50 house
         // numbers. Multiplied by 11.
         if fold_divisors(usize::try_from(house_number).unwrap(), |acc, div| {
-            if (house_number + div - 1) / div <= 50 {
+            if house_number.div_ceil(div) <= 50 {
                 acc + div
             } else {
                 acc
