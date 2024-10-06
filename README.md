@@ -9,14 +9,16 @@ Welcome to my **Advent of Code** workspace! 🎄 This repository contains my sol
 
 ```
 advent-of-code/
-├── core/        # Core library with all solutions
-│   ├── src/
-│   └── Cargo.toml
-├── cli/         # Command-line interface for running solutions
-│   ├── src/
-│   └── Cargo.toml
+├── crates/
+│   ├── core/        # Core library with all solutions
+│   │   ├── src/
+│   │   └── Cargo.toml
+│   ├── cli/         # Command-line interface for running solutions
+│   │   ├── src/
+│   │   └── Cargo.toml
 ├── Cargo.toml       # Workspace configuration
 └── README.md
+
 ```
 
 ## Core Library
