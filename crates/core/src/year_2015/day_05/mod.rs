@@ -33,8 +33,7 @@ fn consecutive_characters(string: &&str) -> bool {
 fn bad_strings(string: &&str) -> bool {
     ["ab", "cd", "pq", "xy"]
         .into_iter()
-        .map(|c| string.contains(c))
-        .any(|second| second)
+        .any(|c| string.contains(c))
 }
 
 fn repeated_pair(string: &&str) -> bool {
